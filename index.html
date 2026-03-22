@@ -2,23 +2,19 @@
 <html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Shop Acc Digital - Premium Store</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shop Acc - Trang Chủ</title>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="bg-orb orb-1"></div>
-  <div class="bg-orb orb-2"></div>
-  <div class="bg-orb orb-3"></div>
+  <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
 
   <header class="topbar glass-panel">
-    <div class="brand-zone">
+    <a href="index.html" class="brand-zone">
       <div class="brand-logo">★ ShopAcc</div>
-      <div class="subtitle">Premium Digital Store</div>
-    </div>
+      <div class="subtitle">Trang Chủ Dashboard</div>
+    </a>
     <div class="topbar-actions">
       <span id="statusPill" class="pill pill-muted">Chưa đăng nhập</span>
       <button id="logoutBtn" class="btn btn-outline hidden">Đăng xuất</button>
@@ -28,14 +24,8 @@
   <main class="shell">
     <section id="authSection" class="auth-grid">
       <article class="panel hero-panel glass-panel">
-        <span class="badge-pro">Firebase Powered</span>
         <h1 class="gradient-text">Hệ Thống<br>Bán Acc Tự Động</h1>
-        <p class="lead">Trải nghiệm mua sắm mượt mà, bảo mật tuyệt đối. Giao dịch tự động 24/7 với hệ thống quản trị siêu cấp.</p>
-        <div class="hero-badges">
-          <span class="pill"><i class="icon">⚡</i> Siêu Tốc</span>
-          <span class="pill"><i class="icon">🛡️</i> Bảo Mật</span>
-          <span class="pill"><i class="icon">🎮</i> Đa Dạng</span>
-        </div>
+        <p class="text-gray" style="font-size: 16px; line-height: 1.6;">Đăng nhập để trải nghiệm nền tảng mua sắm và quản lý tài khoản game tự động 100%.</p>
       </article>
 
       <article class="panel auth-panel glass-panel">
@@ -43,343 +33,151 @@
           <button id="tabLogin" class="tab active">Đăng nhập</button>
           <button id="tabRegister" class="tab">Đăng ký</button>
         </div>
-
-        <form id="loginForm" class="form-stack">
-          <div class="input-group">
-            <label>Tên đăng nhập</label>
-            <input id="loginUsername" type="text" placeholder="vd: admin" autocomplete="username" />
-          </div>
-          <div class="input-group">
-            <label>Mật khẩu</label>
-            <input id="loginPassword" type="password" placeholder="••••••••" autocomplete="current-password" />
-          </div>
+        <form id="loginForm" class="form-stack mt-3">
+          <input id="loginUsername" class="input" type="text" placeholder="Tên đăng nhập" />
+          <input id="loginPassword" class="input" type="password" placeholder="Mật khẩu" />
           <button class="btn btn-glow" type="submit">Vào hệ thống</button>
         </form>
-
-        <form id="registerForm" class="form-stack hidden">
-          <div class="input-group">
-            <label>Tên đăng nhập</label>
-            <input id="registerUsername" type="text" placeholder="vd: hocsinh01" autocomplete="username" />
-          </div>
-          <div class="input-group">
-            <label>Mật khẩu</label>
-            <input id="registerPassword" type="password" placeholder="Tối thiểu 6 ký tự" autocomplete="new-password" />
-          </div>
-          <button class="btn btn-glow" type="submit">Tạo tài khoản</button>
+        <form id="registerForm" class="form-stack hidden mt-3">
+          <input id="registerUsername" class="input" type="text" placeholder="Tên đăng nhập (3-20 ký tự)" />
+          <input id="registerPassword" class="input" type="password" placeholder="Mật khẩu (Tối thiểu 6 ký tự)" />
+          <button class="btn btn-glow" type="submit">Đăng ký ngay</button>
         </form>
-
-        <div id="authMessage" class="message"></div>
+        <div id="authMessage" class="mt-3 text-center"></div>
       </article>
     </section>
 
     <section id="appSection" class="app-grid hidden">
-      
       <div class="stats-grid">
         <article class="panel stat-card glass-panel">
           <div class="stat-icon">💰</div>
-          <div>
-            <div class="stat-label">Số dư hiện tại</div>
-            <div id="balanceValue" class="stat-value text-green">0 đ</div>
-          </div>
+          <div><div class="stat-label text-gray">Số dư hiện tại</div><div id="balanceValue" class="stat-value text-green">0 đ</div></div>
         </article>
         <article class="panel stat-card glass-panel">
           <div class="stat-icon">👑</div>
-          <div>
-            <div class="stat-label">Vai trò</div>
-            <div id="roleValue" class="stat-value text-purple">user</div>
-          </div>
-        </article>
-        <article class="panel stat-card glass-panel">
-          <div class="stat-icon">📦</div>
-          <div>
-            <div class="stat-label">Sản phẩm</div>
-            <div id="productCount" class="stat-value">0</div>
-          </div>
-        </article>
-        <article class="panel stat-card glass-panel">
-          <div class="stat-icon">🛒</div>
-          <div>
-            <div class="stat-label">Đơn hàng</div>
-            <div id="orderCount" class="stat-value">0</div>
-          </div>
+          <div><div class="stat-label text-gray">Vai trò</div><div id="roleValue" class="stat-value text-purple">user</div></div>
         </article>
       </div>
 
-      <section class="panel tools-panel glass-panel">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Khám phá</p>
-            <h2>Tìm kiếm thông minh</h2>
-          </div>
-          <button id="refreshProductsBtn" class="btn btn-outline">🔄 Làm mới</button>
+      <section class="panel glass-panel mt-4 mb-4">
+        <div class="section-head mb-4 text-center">
+          <h2 class="gradient-text" style="font-size: 28px;">Về Shop Acc Của Chúng Tôi</h2>
+          <p class="text-gray mt-2">Hệ thống mua bán tài khoản tự động, bảo mật và uy tín số 1 Việt Nam.</p>
         </div>
-        <div class="tools">
-          <input id="searchInput" class="input input-large" placeholder="🔍 Tìm theo tên, mã số, mô tả..." />
-          <div class="chips" id="chipsWrap">
-            <button class="chip active" data-filter="all">Tất cả Game</button>
-            <button class="chip" data-filter="Free Fire">Free Fire</button>
-            <button class="chip" data-filter="Liên Quân">Liên Quân</button>
-            <button class="chip" data-filter="PUBG Mobile">PUBG Mobile</button>
-            <button class="chip" data-filter="Valorant">Valorant</button>
+        <div class="field-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+          <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 class="text-green mb-2">⚡ Giao Dịch Tự Động 24/7</h3>
+            <p class="text-gray" style="font-size: 14px;">Mọi giao dịch mua hàng, nạp tiền đều được hệ thống AI xử lý hoàn toàn tự động trong vài giây bất kể ngày đêm.</p>
           </div>
-        </div>
-      </section>
-
-      <div class="action-grid">
-        <section id="spinSection" class="panel glass-panel flex-center">
-          <p class="eyebrow text-center">Thử vận may</p>
-          <h2 class="text-center gradient-text" style="margin-bottom: 5px;">🎡 Vòng Quay Vô Cực</h2>
-          <p class="small text-center" style="margin-bottom: 20px;">Chỉ 20.000 đ / Lượt quay</p>
-          
-          <div class="spin-container">
-            <div class="pointer">▼</div>
-            <div id="wheel" class="wheel-visual">
-              <div class="wheel-inner">QUAY</div>
-            </div>
+          <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 class="text-primary mb-2">🔒 Bảo Mật Tuyệt Đối</h3>
+            <p class="text-gray" style="font-size: 14px;">Thông tin cá nhân khách hàng và tài khoản game được mã hóa an toàn 100%, nói không với rủi ro lộ dữ liệu.</p>
           </div>
-          <button id="spinBtn" class="btn btn-glow" style="margin-top: 25px; width: 100%;">THỬ VẬN MAY NGAY</button>
-        </section>
-
-        <section id="topupSection" class="panel glass-panel">
-          <div class="section-head">
-            <div>
-              <p class="eyebrow">Hệ thống Auto</p>
-              <h2>Nạp Tiền Vào Tài Khoản</h2>
-            </div>
-          </div>
-          <div class="auth-tabs" style="margin-bottom:20px;">
-            <button id="tabCard" class="tab active">Thẻ cào API</button>
-            <button id="tabBank" class="tab">Chuyển khoản</button>
-          </div>
-
-          <form id="cardTopupForm" class="form-stack">
-            <div class="input-group">
-              <label>Nhà mạng</label>
-              <select id="cardProvider" class="input">
-                <option value="Viettel">Viettel</option>
-                <option value="Mobifone">Mobifone</option>
-                <option value="Vinaphone">Vinaphone</option>
-              </select>
-            </div>
-            <div class="input-group">
-              <label>Mệnh giá</label>
-              <input id="cardAmount" class="input" type="number" placeholder="100000" min="10000" />
-            </div>
-            <div class="input-group">
-              <label>Mã thẻ</label>
-              <input id="cardCode" class="input" type="text" placeholder="Mã thẻ cào..." />
-            </div>
-            <div class="input-group">
-              <label>Số Serial</label>
-              <input id="cardSerial" class="input" type="text" placeholder="Số seri..." />
-            </div>
-            <button id="cardTopupBtn" class="btn btn-glow" type="button" style="margin-top:10px">Nạp Thẻ Ngay</button>
-          </form>
-
-          <form id="bankTopupForm" class="form-stack hidden">
-            <div class="bank-card">
-              <div class="bank-info">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Logo_MB_new.png" alt="MBBank" class="bank-logo">
-                <div>
-                  <p class="bank-name">Ngân hàng Quân Đội (MBBank)</p>
-                  <p class="bank-number">0333096434</p>
-                  <p class="bank-owner">LAU A VANG</p>
-                </div>
-              </div>
-              
-              <div class="transfer-box">
-                <p class="warning-text">⚠️ NỘI DUNG CHUYỂN KHOẢN (BẮT BUỘC):</p>
-                <div class="transfer-code" id="transferContent">NAP UID</div>
-                <button id="copyTransferBtn" class="btn btn-outline btn-sm" type="button" style="width:100%; margin-top:10px;">📋 Copy Nội Dung</button>
-              </div>
-              <p class="small text-center" style="margin-top:10px">Sai nội dung sẽ không được tự động cộng tiền.</p>
-            </div>
-          </form>
-        </section>
-      </div>
-
-      <section class="panel glass-panel">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Cửa hàng</p>
-            <h2>Danh sách tài khoản</h2>
-          </div>
-          <button id="showHistoryBtn" class="btn btn-purple">📜 Lịch Sử Mua Hàng</button>
-        </div>
-        <div id="productsGrid" class="products-grid">
-          </div>
-      </section>
-
-      <section id="adminPanel" class="panel admin-panel glass-panel hidden">
-        <div class="section-head" style="border-bottom: 1px solid var(--border); padding-bottom: 20px; margin-bottom: 20px;">
-          <div>
-            <p class="eyebrow text-purple">Khu vực cấm</p>
-            <h2 class="gradient-text">Bảng Điều Khiển Hệ Thống (Admin)</h2>
-          </div>
-          <span class="pill pill-admin glow-purple">ADMIN MODE</span>
-        </div>
-
-        <div class="terminal-box">
-          <div class="terminal-header">
-            <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
-            <span class="terminal-title">root@shopacc:~#</span>
-          </div>
-          <div class="terminal-body">
-            <div id="cmdLog" class="terminal-log">> Hệ thống đã sẵn sàng. Gõ /help để xem danh sách lệnh.</div>
-            <div class="terminal-input-wrap">
-              <span class="prompt">$</span>
-              <input id="adminCmdInput" type="text" placeholder="Gõ lệnh ở đây... (VD: /ban uid lydo)" autocomplete="off">
-              <button id="execCmdBtn" class="btn btn-primary btn-sm">RUN</button>
-            </div>
-          </div>
-        </div>
-
-        <div class="admin-grid" style="margin-top: 30px;">
-          <form id="productForm" class="card-form border-glow">
-            <h3 class="mb-3">Thêm / Sửa Sản Phẩm</h3>
-            <div class="field-grid">
-              <div class="input-group"><label>Tiêu đề</label><input id="pTitle" class="input" type="text" placeholder="Tên sản phẩm..." /></div>
-              <div class="input-group"><label>Game</label><input id="pGame" class="input" type="text" placeholder="VD: Free Fire" /></div>
-              <div class="input-group full"><label>Mô tả chi tiết</label><input id="pDescription" class="input" type="text" placeholder="Acc đẹp, có skin..." /></div>
-              <div class="input-group"><label>Giá (VNĐ)</label><input id="pPrice" class="input" type="number" min="0" placeholder="50000" /></div>
-              <div class="input-group"><label>Ảnh chính (URL)</label><input id="pImageUrl" class="input" type="text" placeholder="https://..." /></div>
-              <div class="input-group full"><label>Ảnh phụ (Cách nhau dấu phẩy)</label><input id="pGalleryUrls" class="input" type="text" placeholder="url1, url2" /></div>
-              <div class="input-group full"><label>Ghi chú bàn giao</label><input id="pDeliveryText" class="input" type="text" placeholder="Cách đăng nhập..." /></div>
-              <div class="input-group"><label>Tài khoản Game</label><input id="pDeliveryLogin" class="input" type="text" placeholder="ID/Email" /></div>
-              <div class="input-group"><label>Mật khẩu Game</label><input id="pDeliveryPassword" class="input" type="text" placeholder="Password" /></div>
-            </div>
-            <div class="flex-row mt-3" style="gap:10px">
-              <button id="productSubmitBtn" class="btn btn-glow flex-1" type="submit">Lưu Sản Phẩm</button>
-              <button id="cancelEditBtn" class="btn btn-outline hidden" type="button">Hủy Sửa</button>
-            </div>
-          </form>
-
-          <form id="topupForm" class="card-form">
-            <h3 class="mb-3">Cộng Số Dư Nhanh</h3>
-            <div class="field-grid">
-              <div class="input-group full">
-                <label>Tìm kiếm User</label>
-                <input id="topupUserSearch" class="input" placeholder="🔍 Gõ tên hoặc UID..." />
-              </div>
-              <div class="input-group full">
-                <label>Chọn User</label>
-                <select id="userSelect" class="input"></select>
-              </div>
-              <div class="input-group full">
-                <label>Số tiền muốn cộng</label>
-                <input id="topupAmount" class="input" type="number" min="1" placeholder="100000" />
-              </div>
-            </div>
-            <button class="btn btn-primary mt-3 w-100" type="submit">Xác Nhận Cộng</button>
-          </form>
-        </div>
-
-        <div class="admin-table-wrap mt-4">
-          <div class="section-head mb-3">
-            <h3>Kho Hàng (Quản lý Sản phẩm)</h3>
-            <button id="btnRefreshAdminProducts" class="btn btn-outline btn-sm">🔄 Làm Mới</button>
-          </div>
-          <div class="table-scroll">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Hình ảnh</th>
-                  <th>Sản phẩm / Mã</th>
-                  <th>Game</th>
-                  <th>Giá Bán</th>
-                  <th>Trạng thái</th>
-                  <th class="text-right">Hành động</th>
-                </tr>
-              </thead>
-              <tbody id="adminProductsTable"></tbody>
-            </table>
-          </div>
-        </div>
-
-        <div class="admin-table-wrap mt-4">
-          <div class="section-head mb-3">
-            <h3>Quản Lý Thành Viên</h3>
-          </div>
-          <input id="userSearchInput" class="input mb-3 w-100" placeholder="🔍 Tìm kiếm thành viên theo Tên hoặc UID...">
-          <div class="table-scroll">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th>Tài Khoản</th>
-                  <th>Email</th>
-                  <th>Ví Tiền</th>
-                  <th>Vai Trò</th>
-                  <th class="text-right">Hành động (Click UID copy)</th>
-                </tr>
-              </thead>
-              <tbody id="usersTable"></tbody>
-            </table>
+          <div style="background: rgba(0,0,0,0.3); padding: 20px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.05);">
+            <h3 class="text-purple mb-2">🏆 Uy Tín & Trách Nhiệm</h3>
+            <p class="text-gray" style="font-size: 14px;">Cam kết tài khoản sạch, trắng thông tin, đúng như mô tả hình ảnh. Đội ngũ hỗ trợ bảo hành nhiệt tình, nhanh chóng.</p>
           </div>
         </div>
       </section>
 
-      <footer class="panel footer-panel glass-panel mt-4">
-        <div class="footer-grid">
-          <div class="footer-col">
-            <div class="brand-logo mb-2">★ ShopAcc</div>
-            <p>Hệ thống cung cấp tài khoản Game uy tín, tự động 100% với giao diện hiện đại mang lại trải nghiệm tối ưu nhất.</p>
-          </div>
-          <div class="footer-col">
-            <h3>Hỗ Trợ Khách Hàng</h3>
-            <p>📍 Đắk Nông, Việt Nam</p>
-            <p>📞 Zalo/Hotline: 0333 096 434</p>
-            <p>✉️ Email: luavang@shopacc.com</p>
-          </div>
-          <div class="footer-col">
-            <h3>Chính Sách</h3>
-            <p>• Điều khoản dịch vụ</p>
-            <p>• Chính sách bảo hành</p>
-            <p>• Hướng dẫn mua hàng</p>
-          </div>
-        </div>
-        <div class="footer-bottom">© 2026 Luavang – Premium Digital Store. All Rights Reserved.</div>
-      </footer>
     </section>
   </main>
-
+  
   <div id="toast" class="toast hidden"></div>
 
-  <div id="receiptModal" class="modal-overlay hidden">
-    <div class="panel modal-content glass-panel">
-      <div class="section-head border-bottom pb-2">
-        <div>
-          <p class="eyebrow text-green">Giao dịch hoàn tất</p>
-          <h2>Thông Tin Bàn Giao</h2>
-        </div>
-        <button id="closeModalBtn" class="icon-btn">×</button>
+  <div id="welcomeModal" class="modal-overlay hidden">
+    <div class="panel modal-content glass-panel" style="border: 2px solid var(--primary);">
+      <div class="text-center mb-3">
+        <h2 class="gradient-text">🎉 THÔNG BÁO TỪ ADMIN</h2>
       </div>
-      <div id="receiptBody" class="receipt mt-3"></div>
-      <button id="copyReceiptBtn" class="btn btn-glow mt-4 w-100">📋 Copy Thông Tin</button>
+      <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);">
+        <p>- Chào mừng bạn đến với Shop Acc Tự Động!</p>
+        <p>- Hệ thống giao dịch và trả tài khoản hoàn toàn tự động 24/7.</p>
+        <p>- Tính năng Nạp Tiền Bank an toàn, không cần cung cấp mật khẩu.</p>
+        <p class="text-green mt-2" style="font-weight: 700;">Chúc bạn có trải nghiệm tuyệt vời!</p>
+      </div>
+      <div class="flex-row" style="gap: 10px;">
+        <button id="closeWelcomeBtn" class="btn btn-outline flex-1">Đóng lại</button>
+        <button id="hideWelcomeBtn" class="btn btn-glow flex-1" style="font-size: 13px;">Tắt trong 2 giờ</button>
+      </div>
     </div>
   </div>
 
-  <div id="topupSuccessModal" class="modal-overlay hidden">
-    <div class="panel modal-content glass-panel" style="max-width:400px; text-align:center; padding: 40px 20px;">
-      <div class="success-icon">✅</div>
-      <h2 class="text-green mb-2">Nạp Tiền Thành Công!</h2>
-      <p id="topupSuccessText" class="mb-4 text-gray"></p>
-      <button id="closeTopupSuccessBtn" class="btn btn-outline w-100">Đóng Cửa Sổ</button>
+  <div id="successModal" class="modal-overlay hidden">
+    <div class="panel modal-content glass-panel" style="border: 2px solid var(--green); text-align: center;">
+      <div class="success-animation">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+          <circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/>
+          <path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+        </svg>
+      </div>
+      <h2 id="successModalTitle" class="text-green mb-3">GIAO DỊCH THÀNH CÔNG!</h2>
+      <div id="successModalBody" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; font-family: monospace; text-align: left; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);"></div>
+      <button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 700;">ĐÓNG THÔNG BÁO</button>
     </div>
   </div>
 
-  <div id="historyModal" class="modal-overlay hidden">
-    <article class="panel modal-content glass-panel" style="max-width:700px">
-      <div class="section-head border-bottom pb-2 mb-3">
-        <div>
-          <p class="eyebrow">Tài khoản của tôi</p>
-          <h2>Lịch Sử Đơn Hàng</h2>
+  <footer class="footer-panel">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Về ShopAcc</h3>
+          <p>Hệ thống cung cấp tài khoản game tự động, uy tín, chất lượng hàng đầu. Chúng tôi cam kết bảo mật thông tin và mang lại trải nghiệm mua sắm tuyệt vời nhất cho mọi game thủ.</p>
         </div>
-        <button id="closeHistoryBtn" class="icon-btn">×</button>
+        <div class="footer-col">
+          <h3>Chính Sách & Tuân Thủ</h3>
+          <ul>
+            <li><a href="#">Điều khoản sử dụng dịch vụ</a></li>
+            <li><a href="#">Chính sách bảo mật thông tin</a></li>
+            <li><a href="#">Chính sách đổi trả & hoàn tiền</a></li>
+            <li><a href="#">Tuân thủ tiêu chuẩn cộng đồng</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Liên Hệ & Hỗ Trợ</h3>
+          <p>📍 <strong>Địa chỉ:</strong> 123 Đường Game Thủ, Quận 1, TP. Hồ Chí Minh</p>
+          <p>📧 <strong>Email:</strong> hotro@shopacc.vn</p>
+          <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
+          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">DevTeam VN Studio</span></p>
+        </div>
       </div>
-      <div id="ordersList" class="orders-list"></div>
-    </article>
+      <div class="footer-bottom">
+        &copy; 2026 ShopAcc Premium. All rights reserved. Version 2.0.
+      </div>
+    </div>
+  </footer>
+
+  <div class="navigation" id="bottomNav">
+    <ul>
+      <li class="list active"><a href="index.html"><span class="icon"><ion-icon name="home-outline"></ion-icon></span><span class="text">Home</span></a></li>
+      <li class="list"><a href="shop.html"><span class="icon"><ion-icon name="cart-outline"></ion-icon></span><span class="text">Shop</span></a></li>
+      <li class="list"><a href="spin.html"><span class="icon"><ion-icon name="game-controller-outline"></ion-icon></span><span class="text">Quay Số</span></a></li>
+      <li class="list"><a href="history.html"><span class="icon"><ion-icon name="time-outline"></ion-icon></span><span class="text">Lịch Sử</span></a></li>
+      <li class="list"><a href="topup.html"><span class="icon"><ion-icon name="wallet-outline"></ion-icon></span><span class="text">Nạp Thẻ</span></a></li>
+      <li class="list"><a href="profile.html"><span class="icon"><ion-icon name="person-outline"></ion-icon></span><span class="text">Tài Khoản</span></a></li>
+      <div class="indicator"><div class="indicator-circle"></div></div>
+    </ul>
   </div>
 
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script type="module" src="./app.js"></script>
+  <footer id="copyright"
+    style="
+        position: fixed;
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px;
+        color: #ffffff;
+        opacity: 0.8;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        user-select: none;
+        pointer-events: none;
+        z-index: 9999;
+        text-shadow: 0 0 3px rgba(0,0,0,0.6);
+    ">
+    © 2026 Luavang – All Rights Reserved
+</footer>
 </body>
 </html>

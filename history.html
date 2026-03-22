@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shop Acc - Lịch Sử Giao Dịch</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
+
+  <header class="topbar glass-panel">
+    <a href="index.html" class="brand-zone">
+      <div class="brand-logo">★ ShopAcc</div>
+      <div class="subtitle">Lịch Sử Mua Hàng & Nạp Tiền</div>
+    </a>
+    <div class="topbar-actions"><span id="statusPill" class="pill pill-muted">Đang tải...</span></div>
+  </header>
+
+  <main class="shell">
+    <section class="panel glass-panel">
+      <h2 class="mb-4 text-purple" style="font-size: 26px;">📜 Tất cả Đơn hàng & Biến động số dư của Bạn</h2>
+      <div id="ordersList" class="orders-list"></div>
+    </section>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+
+  <footer class="footer-panel">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Về ShopAcc</h3>
+          <p>Hệ thống cung cấp tài khoản game tự động, uy tín, chất lượng hàng đầu. Chúng tôi cam kết bảo mật thông tin và mang lại trải nghiệm mua sắm tuyệt vời nhất cho mọi game thủ.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Chính Sách & Tuân Thủ</h3>
+          <ul>
+            <li><a href="#">Điều khoản sử dụng dịch vụ</a></li>
+            <li><a href="#">Chính sách bảo mật thông tin</a></li>
+            <li><a href="#">Chính sách đổi trả & hoàn tiền</a></li>
+            <li><a href="#">Tuân thủ tiêu chuẩn cộng đồng</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Liên Hệ & Hỗ Trợ</h3>
+          <p>📍 <strong>Địa chỉ:</strong> 123 Đường Game Thủ, Quận 1, TP. Hồ Chí Minh</p>
+          <p>📧 <strong>Email:</strong> hotro@shopacc.vn</p>
+          <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
+          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">DevTeam VN Studio</span></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 ShopAcc Premium. All rights reserved. Version 2.0.
+      </div>
+    </div>
+  </footer>
+
+  <div class="navigation" id="bottomNav">
+    <ul>
+      <li class="list"><a href="index.html"><span class="icon"><ion-icon name="home-outline"></ion-icon></span><span class="text">Home</span></a></li>
+      <li class="list"><a href="shop.html"><span class="icon"><ion-icon name="cart-outline"></ion-icon></span><span class="text">Shop</span></a></li>
+      <li class="list"><a href="spin.html"><span class="icon"><ion-icon name="game-controller-outline"></ion-icon></span><span class="text">Quay Số</span></a></li>
+      <li class="list active"><a href="history.html"><span class="icon"><ion-icon name="time-outline"></ion-icon></span><span class="text">Lịch Sử</span></a></li>
+      <li class="list"><a href="topup.html"><span class="icon"><ion-icon name="wallet-outline"></ion-icon></span><span class="text">Nạp Thẻ</span></a></li>
+      <li class="list"><a href="profile.html"><span class="icon"><ion-icon name="person-outline"></ion-icon></span><span class="text">Tài Khoản</span></a></li>
+      <div class="indicator"><div class="indicator-circle"></div></div>
+    </ul>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script type="module" src="./app.js"></script>
+  <footer id="copyright"
+    style="
+        position: fixed;
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px;
+        color: #ffffff;
+        opacity: 0.8;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        user-select: none;
+        pointer-events: none;
+        z-index: 9999;
+        text-shadow: 0 0 3px rgba(0,0,0,0.6);
+    ">
+    © 2026 Luavang – All Rights Reserved
+</footer>
+</body>
+</html>

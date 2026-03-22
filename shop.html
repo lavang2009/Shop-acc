@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Shop Acc - Cửa Hàng</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
+
+  <header class="topbar glass-panel">
+    <a href="index.html" class="brand-zone">
+      <div class="brand-logo">★ ShopAcc</div>
+      <div class="subtitle">Mua Bán Tài Khoản Game</div>
+    </a>
+    <div class="topbar-actions"><span id="statusPill" class="pill pill-muted">Đang tải...</span></div>
+  </header>
+
+  <main class="shell app-grid">
+    <section class="panel tools-panel glass-panel">
+      <h2>Tìm kiếm thông minh</h2>
+      <div class="tools mt-3">
+        <input id="searchInput" class="input input-large" placeholder="🔍 Tìm kiếm theo tên sản phẩm, thể loại..." />
+        <div class="chips" id="chipsWrap">
+          <button class="chip active" data-filter="all">Tất cả Game</button>
+          <button class="chip" data-filter="Free Fire">Free Fire</button>
+          <button class="chip" data-filter="Liên Quân">Liên Quân Mobile</button>
+          <button class="chip" data-filter="PUBG Mobile">PUBG Mobile</button>
+          <button class="chip" data-filter="Roblox">Roblox</button>
+        </div>
+      </div>
+    </section>
+
+    <div id="productsGrid" class="products-grid"></div>
+  </main>
+
+  <div id="toast" class="toast hidden"></div>
+  
+  <div id="successModal" class="modal-overlay hidden">
+    <div class="panel modal-content glass-panel" style="border: 2px solid var(--green); text-align: center;">
+      <div class="success-animation">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+      </div>
+      <h2 id="successModalTitle" class="text-green mb-3">GIAO DỊCH THÀNH CÔNG!</h2>
+      <div id="successModalBody" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; font-family: monospace; text-align: left; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);"></div>
+      <button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 700;">ĐÓNG THÔNG BÁO</button>
+    </div>
+  </div>
+
+  <footer class="footer-panel">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Về ShopAcc</h3>
+          <p>Hệ thống cung cấp tài khoản game tự động, uy tín, chất lượng hàng đầu. Chúng tôi cam kết bảo mật thông tin và mang lại trải nghiệm mua sắm tuyệt vời nhất cho mọi game thủ.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Chính Sách & Tuân Thủ</h3>
+          <ul>
+            <li><a href="#">Điều khoản sử dụng dịch vụ</a></li>
+            <li><a href="#">Chính sách bảo mật thông tin</a></li>
+            <li><a href="#">Chính sách đổi trả & hoàn tiền</a></li>
+            <li><a href="#">Tuân thủ tiêu chuẩn cộng đồng</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Liên Hệ & Hỗ Trợ</h3>
+          <p>📍 <strong>Địa chỉ:</strong> 123 Đường Game Thủ, Quận 1, TP. Hồ Chí Minh</p>
+          <p>📧 <strong>Email:</strong> hotro@shopacc.vn</p>
+          <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
+          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">DevTeam VN Studio</span></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 ShopAcc Premium. All rights reserved. Version 2.0.
+      </div>
+    </div>
+  </footer>
+
+  <div class="navigation" id="bottomNav">
+    <ul>
+      <li class="list"><a href="index.html"><span class="icon"><ion-icon name="home-outline"></ion-icon></span><span class="text">Home</span></a></li>
+      <li class="list active"><a href="shop.html"><span class="icon"><ion-icon name="cart-outline"></ion-icon></span><span class="text">Shop</span></a></li>
+      <li class="list"><a href="spin.html"><span class="icon"><ion-icon name="game-controller-outline"></ion-icon></span><span class="text">Quay Số</span></a></li>
+      <li class="list"><a href="history.html"><span class="icon"><ion-icon name="time-outline"></ion-icon></span><span class="text">Lịch Sử</span></a></li>
+      <li class="list"><a href="topup.html"><span class="icon"><ion-icon name="wallet-outline"></ion-icon></span><span class="text">Nạp Thẻ</span></a></li>
+      <li class="list"><a href="profile.html"><span class="icon"><ion-icon name="person-outline"></ion-icon></span><span class="text">Tài Khoản</span></a></li>
+      <div class="indicator"><div class="indicator-circle"></div></div>
+    </ul>
+  </div>
+
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script type="module" src="./app.js"></script>
+    <footer id="copyright"
+    style="
+        position: fixed;
+        bottom: 6px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 11px;
+        color: #ffffff;
+        opacity: 0.8;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+        user-select: none;
+        pointer-events: none;
+        z-index: 9999;
+        text-shadow: 0 0 3px rgba(0,0,0,0.6);
+    ">
+    © 2026 Luavang – All Rights Reserved
+</footer>
+</body>
+</html>
