@@ -27,6 +27,17 @@
 
   <div id="toast" class="toast hidden"></div>
 
+  <div id="successModal" class="modal-overlay hidden">
+    <div class="panel modal-content glass-panel" style="border: 2px solid var(--green); text-align: center;">
+      <div class="success-animation">
+        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+      </div>
+      <h2 id="successModalTitle" class="text-green mb-3">GIAO DỊCH THÀNH CÔNG!</h2>
+      <div id="successModalBody" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; font-family: monospace; text-align: left; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);"></div>
+      <button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 700;">ĐÓNG THÔNG BÁO</button>
+    </div>
+  </div>
+
   <footer class="footer-panel">
     <div class="shell">
       <div class="footer-grid">
@@ -45,14 +56,14 @@
         </div>
         <div class="footer-col">
           <h3>Liên Hệ & Hỗ Trợ</h3>
-          <p>📍 <strong>Địa chỉ:</strong> 123 Đường Game Thủ, Quận 1, TP. Hồ Chí Minh</p>
-          <p>📧 <strong>Email:</strong> hotro@shopacc.vn</p>
+          <p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p>
+          <p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p>
           <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
-          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vang</span></p>
+          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p>
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2026 ShopAcc Premium. All rights reserved. Version 2.0.
+        &copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.
       </div>
     </div>
   </footer>
@@ -71,23 +82,5 @@
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script type="module" src="./app.js"></script>
-  <footer id="copyright"
-    style="
-        position: fixed;
-        bottom: 6px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 11px;
-        color: #ffffff;
-        opacity: 0.8;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        user-select: none;
-        pointer-events: none;
-        z-index: 9999;
-        text-shadow: 0 0 3px rgba(0,0,0,0.6);
-    ">
-    © 2026 Luavang – All Rights Reserved
-</footer>
 </body>
 </html>

@@ -20,20 +20,35 @@
 
   <main class="shell app-grid">
     <section class="panel tools-panel glass-panel">
-      <h2>Tìm kiếm thông minh</h2>
-      <div class="tools mt-3">
-        <input id="searchInput" class="input input-large" placeholder="🔍 Tìm kiếm theo tên sản phẩm, thể loại..." />
-        <div class="chips" id="chipsWrap">
-          <button class="chip active" data-filter="all">Tất cả Game</button>
-          <button class="chip" data-filter="Free Fire">Free Fire</button>
-          <button class="chip" data-filter="Liên Quân">Liên Quân Mobile</button>
-          <button class="chip" data-filter="PUBG Mobile">PUBG Mobile</button>
-          <button class="chip" data-filter="Roblox">Roblox</button>
+      <div class="shop-categories mt-2 mb-2">
+        <div class="cat-item active" data-filter="all">
+          <div class="cat-icon all-games"></div>
+          <span class="cat-text">Tất Cả</span>
         </div>
+        <div class="cat-item" data-filter="liên quân">
+          <div class="cat-icon game-icon"><img src="image_1.png" alt="Liên Quân" onerror="this.src='https://via.placeholder.com/60?text=LQ'"></div>
+          <span class="cat-text">Liên Quân</span>
+        </div>
+        <div class="cat-item" data-filter="blox">
+          <div class="cat-icon game-icon"><img src="image_3.png" alt="Blox Fruits" onerror="this.src='https://via.placeholder.com/60?text=BF'"></div>
+          <span class="cat-text">Blox Fruits</span>
+        </div>
+        <div class="cat-item" data-filter="free fire">
+          <div class="cat-icon game-icon"><img src="image_4.png" alt="Free Fire" onerror="this.src='https://via.placeholder.com/60?text=FF'"></div>
+          <span class="cat-text">Free Fire</span>
+        </div>
+        <div class="cat-item" data-filter="tốc chiến">
+          <div class="cat-icon game-icon"><img src="image_6.png" alt="Tốc Chiến" onerror="this.src='https://via.placeholder.com/60?text=TC'"></div>
+          <span class="cat-text">Tốc Chiến</span>
+        </div>
+      </div>
+
+      <div class="tools mt-4">
+        <input id="searchInput" class="input input-large" placeholder="🔍 Tìm kiếm nhanh tên sản phẩm, thể loại..." />
       </div>
     </section>
 
-    <div id="productsGrid" class="products-grid"></div>
+    <div id="shopContainer" class="w-100"></div>
   </main>
 
   <div id="toast" class="toast hidden"></div>
@@ -67,14 +82,14 @@
         </div>
         <div class="footer-col">
           <h3>Liên Hệ & Hỗ Trợ</h3>
-          <p>📍 <strong>Địa chỉ:</strong> 123 Đường Game Thủ, Quận 1, TP. Hồ Chí Minh</p>
-          <p>📧 <strong>Email:</strong> hotro@shopacc.vn</p>
+          <p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p>
+          <p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p>
           <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
-          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vang</span></p>
+          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p>
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2026 ShopAcc Premium. All rights reserved. Version 2.0.
+        &copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.
       </div>
     </div>
   </footer>
@@ -93,23 +108,5 @@
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script type="module" src="./app.js"></script>
-    <footer id="copyright"
-    style="
-        position: fixed;
-        bottom: 6px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 11px;
-        color: #ffffff;
-        opacity: 0.8;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        user-select: none;
-        pointer-events: none;
-        z-index: 9999;
-        text-shadow: 0 0 3px rgba(0,0,0,0.6);
-    ">
-    © 2026 Luavang – All Rights Reserved
-</footer>
 </body>
 </html>

@@ -20,9 +20,9 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const state = {
-  user: null, profile: null, products: [], orders: [], users: [], lastReceipt: null,
+  user: null, profile: null, products: [], orders: [], users: [],
   searchTerm: '', gameFilter: 'all', editProductId: null, userSearchTerm: '', profileUnsubscribe: null,
-  allOrders: [], allOrdersSearchTerm: ''
+  allOrders: [], allOrdersSearchTerm: '', isSpinning: false // CỜ CHẶN POPUP KHI QUAY
 };
 
 const el = (id) => document.getElementById(id);
@@ -39,18 +39,18 @@ const els = {
   adminEntryZone: el('adminEntryZone'),
   
   welcomeModal: el('welcomeModal'), closeWelcomeBtn: el('closeWelcomeBtn'), hideWelcomeBtn: el('hideWelcomeBtn'),
-
   successModal: el('successModal'), successModalTitle: el('successModalTitle'), successModalBody: el('successModalBody'), closeSuccessModalBtn: el('closeSuccessModalBtn'),
 
-  productsGrid: el('productsGrid'), searchInput: el('searchInput'), chipsWrap: el('chipsWrap'), ordersList: el('ordersList'),
-  spinBtn: el('spinBtn'), wheel: el('wheel'), transferContent: el('transferContent'), copyTransferBtn: el('copyTransferBtn'),
+  shopContainer: el('shopContainer'), searchInput: el('searchInput'), ordersList: el('ordersList'),
+  wheelBox: el('wheelBox'), spinBtnImg: el('spinBtnImg'), transferContent: el('transferContent'), copyTransferBtn: el('copyTransferBtn'), qrCodeImg: el('qrCodeImg'),
   
   adminPanel: el('adminPanel'), cmdLog: el('cmdLog'), adminCmdInput: el('adminCmdInput'), execCmdBtn: el('execCmdBtn'),
   productForm: el('productForm'), pTitle: el('pTitle'), pGame: el('pGame'), pDescription: el('pDescription'), pPrice: el('pPrice'),
   pImageUrl: el('pImageUrl'), pGalleryUrls: el('pGalleryUrls'), pDeliveryText: el('pDeliveryText'), pDeliveryLogin: el('pDeliveryLogin'), pDeliveryPassword: el('pDeliveryPassword'),
   productSubmitBtn: el('productSubmitBtn'), cancelEditBtn: el('cancelEditBtn'), adminProductsTable: el('adminProductsTable'), btnRefreshAdminProducts: el('btnRefreshAdminProducts'),
   topupForm: el('topupForm'), userSelect: el('userSelect'), topupAmount: el('topupAmount'), usersTable: el('usersTable'), userSearchInput: el('userSearchInput'),
-  allOrdersTable: el('allOrdersTable'), allOrdersSearchInput: el('allOrdersSearchInput')
+  allOrdersTable: el('allOrdersTable'), allOrdersSearchInput: el('allOrdersSearchInput'),
+  topupLeaderboardList: el('topupLeaderboardList')
 };
 
 let toastTimer = null;
@@ -61,9 +61,7 @@ window.showToast = function(message, type = 'success') {
 };
 
 window.copyText = function(text, msg) {
-  navigator.clipboard.writeText(text)
-    .then(() => window.showToast(msg || 'Đã copy thành công!'))
-    .catch(() => window.showToast('Lỗi copy', 'error'));
+  navigator.clipboard.writeText(text).then(() => window.showToast(msg || 'Đã copy thành công!')).catch(() => window.showToast('Lỗi copy', 'error'));
 };
 
 function normalizeUsername(username) { return String(username || '').trim().toLowerCase(); }
@@ -104,6 +102,7 @@ if (els.welcomeModal) {
   els.hideWelcomeBtn?.addEventListener('click', () => { localStorage.setItem('hideWelcomeUntil', Date.now() + 2 * 60 * 60 * 1000); els.welcomeModal.classList.add('hidden'); });
 }
 
+// Lệnh Console Admin
 async function processAdminCommand(rawCmd) {
   if (!state.user || state.profile?.role !== 'admin') return;
   const parts = rawCmd.trim().split(' '); const cmd = parts[0].toLowerCase(); const args = parts.slice(1);
@@ -125,28 +124,56 @@ async function processAdminCommand(rawCmd) {
 }
 
 function renderProducts() {
-  if (!els.productsGrid) return;
+  if (!els.shopContainer) return;
   let list = [...state.products];
   if (state.gameFilter !== 'all') list = list.filter(p => String(p.game || '').toLowerCase().includes(state.gameFilter.toLowerCase()));
   if (state.searchTerm) list = list.filter(p => `${p.title||''} ${p.game||''} ${p.description||''}`.toLowerCase().includes(state.searchTerm.toLowerCase()));
-  if (!list.length) return els.productsGrid.innerHTML = '<div class="text-gray text-center w-100" style="grid-column: 1/-1; padding: 40px">Chưa có sản phẩm nào.</div>';
+  
+  if (!list.length) {
+    els.shopContainer.innerHTML = '<div class="text-gray text-center w-100" style="padding: 40px">Chưa có sản phẩm nào cho mục này.</div>';
+    return;
+  }
 
-  els.productsGrid.innerHTML = list.map(p => {
-    const sold = p.status === 'sold';
-    return `
-      <article class="product-card">
-        <div class="card-img-wrap"><img class="product-img" src="${getImageList(p)[0]}" loading="lazy" /><span class="status-badge ${sold ? 'sold' : 'ok'}">${sold ? 'Đã Bán' : 'Sẵn Sàng'}</span></div>
-        <div class="card-body">
-          <div class="product-game">${p.game || '—'}</div>
-          <h3 class="product-title" title="${p.title}">${p.title}</h3>
-          <p class="product-desc">${p.description || 'Chưa có mô tả chi tiết'}</p>
-          <div class="price-row"><span class="price">${formatMoney(p.price)}</span><span class="small text-gray">Mã: #${p.id.slice(-4)}</span></div>
-          <button class="btn ${sold ? 'btn-disabled' : 'btn-glow'} w-100" data-buy="${p.id}" ${sold ? 'disabled' : ''}>${sold ? 'HẾT HÀNG' : 'MUA NGAY'}</button>
+  const grouped = list.reduce((acc, p) => {
+    const game = p.game || 'Khác';
+    if (!acc[game]) acc[game] = [];
+    acc[game].push(p);
+    return acc;
+  }, {});
+
+  let html = '';
+  for (const [game, prods] of Object.entries(grouped)) {
+    html += `
+      <div class="game-section">
+        <div class="game-section-header">
+          <h3>🎮 KHO NICK ${game}</h3>
+          <a href="#">Xem tất cả ></a>
         </div>
-      </article>`;
-  }).join('');
+        <div class="products-grid">
+          ${prods.map(p => {
+            const sold = p.status === 'sold';
+            return `
+              <article class="product-card">
+                <div class="card-img-wrap">
+                  <img class="product-img" src="${getImageList(p)[0]}" loading="lazy" />
+                  <span class="status-badge ${sold ? 'sold' : 'ok'}">${sold ? 'Đã Bán' : 'Sẵn Sàng'}</span>
+                </div>
+                <div class="card-body">
+                  <h3 class="product-title" title="${p.title}">${p.title}</h3>
+                  <div class="product-id-text">Mã số: #${p.id.slice(-5)}</div>
+                  <p class="product-desc">${p.description || 'Chưa có mô tả chi tiết'}</p>
+                  <div class="price-row"><span class="price">${formatMoney(p.price)}</span></div>
+                  <button class="btn ${sold ? 'btn-disabled' : 'btn-glow'} w-100" data-buy="${p.id}" ${sold ? 'disabled' : ''}>${sold ? 'HẾT HÀNG' : 'MUA NGAY'}</button>
+                </div>
+              </article>`;
+          }).join('')}
+        </div>
+      </div>
+    `;
+  }
+  els.shopContainer.innerHTML = html;
 
-  els.productsGrid.querySelectorAll('[data-buy]').forEach(btn => {
+  els.shopContainer.querySelectorAll('[data-buy]').forEach(btn => {
     btn.addEventListener('click', async () => {
       if (!state.user) return window.showToast('Vui lòng Đăng nhập.', 'error');
       setLoading(btn, true, 'Đang mua...');
@@ -179,7 +206,7 @@ function renderOrders() {
     <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:16px; padding:16px; margin-bottom:12px;">
       <div style="display:flex; justify-content:space-between; margin-bottom:12px;">
         <div><strong style="font-size:16px; display:block;">${o.title}</strong><span class="text-purple" style="font-size:13px">${o.game||'—'}</span></div>
-        <div style="text-align:right"><div style="font-size:18px; font-weight:bold;">${o.title?.includes('Bơm Tiền') || o.title?.includes('NẠP') ? `<span class="text-green">+${formatMoney(o.price)}</span>` : `<span class="text-red">-${formatMoney(o.price)}</span>`}</div><div class="small text-gray">${formatDate(o.createdAt)}</div></div>
+        <div style="text-align:right"><div style="font-size:18px; font-weight:bold;">${o.title?.includes('Bơm Tiền') || o.title?.includes('NẠP') || o.title?.includes('TRÚNG') ? `<span class="text-green">+${formatMoney(o.price)}</span>` : `<span class="text-red">-${formatMoney(o.price)}</span>`}</div><div class="small text-gray">${formatDate(o.createdAt)}</div></div>
       </div>
       <div style="background:rgba(0,0,0,0.3); border-radius:10px; padding:12px; font-family:monospace; font-size:13px; display:grid; gap:8px;">
         <div style="display:flex; justify-content:space-between"><span class="text-gray">Nội dung/Tài khoản:</span> <strong style="color:#2de38b">${o.deliveryLogin || o.deliveryText || '—'}</strong></div>
@@ -281,10 +308,60 @@ function renderUsers() {
   }
 }
 
+// LẤY BẢNG XẾP HẠNG: LỌC BỎ ADMIN
+async function loadLeaderboard() {
+  if (!els.topupLeaderboardList) return;
+  try {
+    const snap = await getDocs(collection(db, 'users'));
+    let users = snap.docs.map(d => d.data());
+    
+    // LỌC BỎ ADMIN KHỎI BẢNG XẾP HẠNG
+    users = users.filter(u => u.role !== 'admin');
+    
+    const getVal = u => u.totalTopup || u.balance || 0;
+    users.sort((a, b) => getVal(b) - getVal(a));
+    
+    const top100 = users.filter(u => getVal(u) > 0).slice(0, 100);
+    
+    if (!top100.length) {
+      els.topupLeaderboardList.innerHTML = '<div class="text-center text-gray py-4">Chưa có người chơi nào nạp thẻ.</div>';
+      return;
+    }
+
+    els.topupLeaderboardList.innerHTML = top100.map((u, i) => {
+      let rank = `<span class="rank-number">${i+1}</span>`;
+      if (i === 0) rank = `<span class="rank-medal" style="filter: drop-shadow(0 0 10px #FFD700);">🥇</span>`;
+      if (i === 1) rank = `<span class="rank-medal" style="filter: drop-shadow(0 0 10px #C0C0C0);">🥈</span>`;
+      if (i === 2) rank = `<span class="rank-medal" style="filter: drop-shadow(0 0 10px #CD7F32);">🥉</span>`;
+      
+      const isMe = state.user && state.user.uid === u.uid;
+      const meStyle = isMe ? 'border: 1px solid var(--primary); background: rgba(110,141,255,0.1);' : '';
+      
+      return `
+        <div class="leaderboard-item" style="${meStyle}">
+          <div class="lb-left">
+            ${rank}
+            <img class="lb-avatar" src="https://ui-avatars.com/api/?name=${u.username || 'U'}&background=random&color=fff" />
+            <div class="lb-info">
+              <strong class="lb-name">${u.username} ${isMe ? '<span class="text-green text-sm">(Bạn)</span>' : ''}</strong>
+              <span class="lb-role">${u.role === 'admin' ? 'Quản Trị Viên' : 'Thành viên'}</span>
+            </div>
+          </div>
+          <div class="lb-right text-green fw-bold">
+            ${formatMoney(getVal(u))}
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    console.log('Lỗi tải BXH:', e);
+  }
+}
+
 async function loadProfile(uid) {
   const snap = await getDoc(doc(db, 'users', uid));
   if (snap.exists()) return { id: snap.id, ...snap.data() };
-  const fallback = { uid, username: state.user?.email?.split('@')?.[0] || 'user', email: state.user?.email || `${uid}@shopacc.local`, balance: 0, role: 'user', banned: false, createdAt: serverTimestamp() };
+  const fallback = { uid, username: state.user?.email?.split('@')?.[0] || 'user', email: state.user?.email || `${uid}@shopacc.local`, balance: 0, totalTopup: 0, role: 'user', banned: false, createdAt: serverTimestamp() };
   await setDoc(doc(db, 'users', uid), fallback, { merge: true }); return fallback;
 }
 async function loadProducts() {
@@ -323,14 +400,19 @@ async function refreshAll() {
   if (els.profileBalance) els.profileBalance.textContent = formatMoney(d.balance);
   if (els.profileRole) els.profileRole.textContent = (d.role || 'user').toUpperCase();
   if (els.profileUid) els.profileUid.textContent = d.id;
-  if (els.transferContent) els.transferContent.textContent = `${d.id}`;
+  
+  if (els.transferContent) els.transferContent.textContent = d.id;
+  if (els.qrCodeImg) {
+    const encodedText = encodeURIComponent(d.id);
+    els.qrCodeImg.src = `https://img.vietqr.io/image/MB-0333096434-compact2.png?amount=0&addInfo=${encodedText}&accountName=LAU%20A%20VANG`;
+  }
+  
   if (els.profileAvatar) els.profileAvatar.src = `https://ui-avatars.com/api/?name=${d.username || 'U'}&background=6e8dff&color=fff&size=100`;
 
-  await Promise.all([loadProducts(), loadOrders(), loadUsers()]);
+  await Promise.all([loadProducts(), loadOrders(), loadUsers(), loadLeaderboard()]);
   if (state.profile.role === 'admin') await loadAllOrders();
 }
 
-// BẢO VỆ ROUTER VÀ LẮNG NGHE TÀI KHOẢN
 onAuthStateChanged(auth, async (user) => {
   state.user = user;
   const path = window.location.pathname;
@@ -363,10 +445,11 @@ onAuthStateChanged(auth, async (user) => {
       
       if (d.banned) { alert(`Tài khoản bị khóa: ${d.banReason}`); await signOut(auth); return; }
       
-      if (state.profile && d.balance > state.profile.balance) {
+      if (state.profile && d.balance > state.profile.balance && !state.isSpinning) {
          const diff = d.balance - state.profile.balance;
          showSuccessModal('NẠP TIỀN THÀNH CÔNG', `<div class="receipt-item"><span>Số tiền cộng</span> <strong class="text-green">+${formatMoney(diff)}</strong></div><div class="receipt-item"><span>Số dư hiện tại</span> <strong class="text-white">${formatMoney(d.balance)}</strong></div>`);
          await loadOrders();
+         await loadLeaderboard();
       }
       state.profile = d;
       
@@ -397,7 +480,7 @@ els.registerForm?.addEventListener('submit', async (e) => {
   if (!u || p.length < 6) return setAuthMessage('Tên đăng nhập hợp lệ và Mật khẩu > 6 ký tự.');
   try {
     const cred = await createUserWithEmailAndPassword(auth, usernameToEmail(u), p); await updateProfile(cred.user, { displayName: u });
-    await setDoc(doc(db, 'users', cred.user.uid), { uid: cred.user.uid, username: u, email: usernameToEmail(u), balance: 0, role: 'user', banned: false, createdAt: serverTimestamp() }, { merge: true });
+    await setDoc(doc(db, 'users', cred.user.uid), { uid: cred.user.uid, username: u, email: usernameToEmail(u), balance: 0, totalTopup: 0, role: 'user', banned: false, createdAt: serverTimestamp() }, { merge: true });
     window.showToast('Tạo tài khoản thành công!');
   } catch (e) { setAuthMessage('Tài khoản đã tồn tại.'); }
 });
@@ -405,38 +488,94 @@ els.registerForm?.addEventListener('submit', async (e) => {
 els.logoutBtn?.addEventListener('click', () => signOut(auth));
 els.profileLogoutBtn?.addEventListener('click', () => signOut(auth));
 
-els.copyTransferBtn?.addEventListener('click', () => {
-  const content = els.transferContent?.textContent;
-  if (content && !content.includes('Đang tải') && !content.includes('undefined')) { window.copyText(content, 'Đã copy nội dung chuyển khoản!'); } 
-  else { window.showToast('Mã nạp chưa sẵn sàng, vui lòng đợi!', 'error'); }
+document.querySelectorAll('.cat-item').forEach(item => {
+  item.addEventListener('click', () => {
+    document.querySelectorAll('.cat-item').forEach(i => i.classList.remove('active'));
+    item.classList.add('active');
+    state.gameFilter = item.dataset.filter;
+    renderProducts();
+  });
 });
+els.searchInput?.addEventListener('input', () => { state.searchTerm = els.searchInput.value; renderProducts(); });
 
-els.spinBtn?.addEventListener('click', async () => {
+// VÒNG QUAY HÌNH ẢNH MỚI (TÍNH GÓC XOAY TỪ ĐỈNH XUỐNG)
+let currentRotation = 0;
+
+els.spinBtnImg?.addEventListener('click', async () => {
   if (!state.user || state.profile.balance < 20000) return window.showToast('Số dư cần tối thiểu 20.000đ', 'error');
-  const avail = state.products.filter(p => p.status === 'available'); if (!avail.length) return window.showToast('Kho Acc trúng thưởng hiện đang trống', 'error');
+  if (els.spinBtnImg.style.pointerEvents === 'none') return;
   
-  setLoading(els.spinBtn, true, 'Đang Quay...');
-  const newBal = state.profile.balance - 20000; await updateDoc(doc(db, 'users', state.user.uid), { balance: newBal });
-  const isWin = Math.random() < 0.05; 
-  els.wheel.style.transform = `rotate(${1440 + Math.random()*720}deg)`;
+  state.isSpinning = true; 
+  els.spinBtnImg.style.pointerEvents = 'none';
+  els.spinBtnImg.style.filter = 'brightness(0.7)';
+
+  const cost = 20000;
+  const initialBal = state.profile.balance;
+  const balAfterCost = initialBal - cost;
   
+  const rand = Math.random() * 100;
+  let targetSlice = 0;
+  let prizeName = '';
+  let prizeValue = 0;
+
+  if (rand <= 0.1) {
+    prizeName = 'Chúc bạn may mắn lần sau';
+    prizeValue = 0;
+    targetSlice = Math.random() > 0.5 ? 0 : 180; 
+  } else if (rand <= 10.1) {
+    prizeName = '30.000 đ';
+    prizeValue = 30000;
+    targetSlice = Math.random() > 0.5 ? 135 : 315; 
+  } else if (rand <= 60.1) {
+    prizeName = '10.000 đ';
+    prizeValue = 10000;
+    targetSlice = Math.random() > 0.5 ? 90 : 270; 
+  } else {
+    prizeName = '20.000 đ';
+    prizeValue = 20000;
+    targetSlice = Math.random() > 0.5 ? 45 : 225; 
+  }
+
+  const offset = Math.floor(Math.random() * 20) - 10;
+  const finalRotation = (360 * 5) + targetSlice + offset; 
+
+  await updateDoc(doc(db, 'users', state.user.uid), { balance: balAfterCost });
+
+  if(els.wheelBox) {
+    els.wheelBox.style.transition = 'transform 4s cubic-bezier(0.15, 0.83, 0.25, 1)';
+    els.wheelBox.style.transform = `rotate(${finalRotation}deg)`;
+  }
+
   setTimeout(async () => {
-    els.wheel.style.transition = 'none'; els.wheel.style.transform = 'rotate(0deg)';
-    setTimeout(() => { els.wheel.style.transition = 'transform 3s cubic-bezier(0.2, 0.8, 0.2, 1)'; }, 50);
+    const finalBal = balAfterCost + prizeValue;
     
-    if(isWin) {
-      const p = avail[Math.floor(Math.random() * avail.length)];
-      await updateDoc(doc(db, 'products', p.id), { status: 'sold' });
-      const od = { userId: state.user.uid, title:`[TRÚNG THƯỞNG] ${p.title}`, game:'Vòng Quay', price:20000, deliveryText:p.deliveryText, deliveryLogin:p.deliveryLogin, deliveryPassword:p.deliveryPassword, createdAt:serverTimestamp(), newBalance:newBal };
+    if(prizeValue > 0) {
+      const od = { userId: state.user.uid, title: `[TRÚNG THƯỞNG] ${prizeName}`, game: 'Vòng Quay Nhân Phẩm', price: prizeValue, deliveryText: 'Cộng trực tiếp vào số dư', deliveryLogin: '—', deliveryPassword: '—', createdAt: serverTimestamp(), newBalance: finalBal };
       await addDoc(collection(db, 'orders'), od);
+      await updateDoc(doc(db, 'users', state.user.uid), { balance: finalBal });
       
-      showSuccessModal('BẠN ĐÃ TRÚNG THƯỞNG!', `<div class="receipt-item"><span>Phần thưởng</span> <span class="text-purple">${od.title}</span></div><div class="receipt-item"><span>Tài khoản</span> <strong style="color:#2de38b; font-size:16px;">${od.deliveryLogin}</strong></div><div class="receipt-item"><span>Mật khẩu</span> <strong style="color:#ff4757; font-size:16px;">${od.deliveryPassword}</strong></div>`);
+      showSuccessModal('BẠN ĐÃ TRÚNG THƯỞNG!', `<div class="receipt-item"><span>Phần thưởng nhận được</span> <strong class="text-green">+${formatMoney(prizeValue)}</strong></div><div class="receipt-item"><span>Số dư hiện tại</span> <strong class="text-white">${formatMoney(finalBal)}</strong></div>`);
     } else {
-      await addDoc(collection(db, 'orders'), { userId: state.user.uid, title:'[TRƯỢT] Vòng Quay', game:'Vòng Quay', price:20000, deliveryText:'—', deliveryLogin:'—', deliveryPassword:'—', createdAt:serverTimestamp(), newBalance:newBal });
-      window.showToast('Tiếc quá! Chúc may mắn lần sau', 'error');
+      await addDoc(collection(db, 'orders'), { userId: state.user.uid, title: '[TRƯỢT] Vòng Quay', game: 'Vòng Quay', price: cost, deliveryText: '—', deliveryLogin: '—', deliveryPassword: '—', createdAt: serverTimestamp(), newBalance: balAfterCost });
+      window.showToast('Tiếc quá! Chúc bạn may mắn lần sau', 'error');
     }
-    await refreshAll(); setLoading(els.spinBtn, false);
-  }, 3000);
+    
+    setTimeout(() => {
+      if(els.wheelBox) {
+        els.wheelBox.style.transition = 'transform 1.5s ease-out';
+        els.wheelBox.style.transform = 'rotate(0deg)';
+      }
+      setTimeout(() => {
+        if(els.spinBtnImg) {
+          els.spinBtnImg.style.pointerEvents = 'auto';
+          els.spinBtnImg.style.filter = 'drop-shadow(0 4px 10px rgba(0,0,0,0.6))';
+        }
+        state.isSpinning = false;
+      }, 1500);
+    }, 3000);
+    
+    await refreshAll();
+  }, 4000);
 });
 
 els.btnRefreshAdminProducts?.addEventListener('click', async () => { await loadProducts(); window.showToast('Đã tải lại kho'); });
@@ -457,6 +596,12 @@ els.productForm?.addEventListener('submit', async (e) => {
 });
 els.cancelEditBtn?.addEventListener('click', () => { state.editProductId = null; els.productForm.reset(); els.productSubmitBtn.textContent='Thêm Sản Phẩm Mới'; els.cancelEditBtn.classList.add('hidden'); });
 
+els.copyTransferBtn?.addEventListener('click', () => {
+  const content = els.transferContent?.textContent;
+  if (content && !content.includes('Đang tải') && !content.includes('undefined')) { window.copyText(content, 'Đã copy nội dung chuyển khoản!'); } 
+  else { window.showToast('Mã nạp chưa sẵn sàng, vui lòng đợi!', 'error'); }
+});
+
 els.topupForm?.addEventListener('submit', async (e) => {
   e.preventDefault(); const uid = els.userSelect.value; const amt = Number(els.topupAmount.value);
   if (!uid || !amt) return window.showToast('Hãy nhập đủ số tiền và chọn Người cần nạp', 'error');
@@ -464,7 +609,9 @@ els.topupForm?.addEventListener('submit', async (e) => {
     const snap = await getDoc(doc(db, 'users', uid));
     if (snap.exists()) { 
       const newBal = (snap.data().balance||0) + amt;
-      await updateDoc(doc(db, 'users', uid), { balance: newBal }); 
+      const newTotalTopup = (snap.data().totalTopup||0) + amt; 
+      await updateDoc(doc(db, 'users', uid), { balance: newBal, totalTopup: newTotalTopup }); 
+      
       await addDoc(collection(db, 'orders'), { userId: uid, title: '[HỆ THỐNG] Bơm Tiền', game: 'Admin Giao Dịch', price: amt, deliveryText: 'Admin nạp tiền vào tài khoản', deliveryLogin: '—', deliveryPassword: '—', createdAt: serverTimestamp(), newBalance: newBal });
       els.topupAmount.value = ''; 
       showSuccessModal('BƠM TIỀN THÀNH CÔNG', `<div class="receipt-item"><span>Người nhận</span> <strong class="text-white">${snap.data().username || uid}</strong></div><div class="receipt-item"><span>Số tiền nạp</span> <strong class="text-green">+${formatMoney(amt)}</strong></div>`);

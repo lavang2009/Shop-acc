@@ -40,23 +40,49 @@
         </div>
       </div>
 
-      <h4 class="text-purple mb-3 mt-4">Thêm / Sửa Sản Phẩm</h4>
-      <form id="productForm" class="form-stack p-3 mb-4" style="background: rgba(0,0,0,0.2); border-radius: 12px; border: 1px solid var(--border);">
-        <div class="field-grid">
-          <div class="input-group"><label>Tên Sản Phẩm *</label><input id="pTitle" class="input" required></div>
-          <div class="input-group"><label>Game/Thể loại *</label><input id="pGame" class="input" required></div>
-          <div class="input-group full"><label>Mô tả ngắn</label><input id="pDescription" class="input"></div>
-          <div class="input-group"><label>Giá tiền (VNĐ) *</label><input id="pPrice" type="number" class="input" required></div>
-          <div class="input-group"><label>Ảnh chính (URL Link)</label><input id="pImageUrl" class="input"></div>
-          <div class="input-group full"><label>Nhiều Ảnh (Cách nhau bằng dấu phẩy)</label><input id="pGalleryUrls" class="input"></div>
-          
-          <div class="input-group full"><label>Ghi chú khi mua (Bàn giao)</label><input id="pDeliveryText" class="input" placeholder="Vd: Đăng nhập bằng Facebook..."></div>
-          <div class="input-group"><label>Tài khoản Game (Sẽ giao cho khách)</label><input id="pDeliveryLogin" class="input" required></div>
-          <div class="input-group"><label>Mật khẩu Game (Sẽ giao cho khách)</label><input id="pDeliveryPassword" class="input" required></div>
+      <h4 class="text-purple mb-3 mt-4" style="font-size: 18px;">Thêm / Sửa Sản Phẩm</h4>
+      <form id="productForm" class="admin-product-form mb-4">
+        <div class="form-grid-2">
+          <div class="input-row">
+            <label>Tên Sản Phẩm *</label>
+            <input id="pTitle" class="input" required>
+          </div>
+          <div class="input-row">
+            <label>Game/Thể loại *</label>
+            <input id="pGame" class="input" required>
+          </div>
+          <div class="input-row">
+            <label>Mô tả ngắn</label>
+            <input id="pDescription" class="input">
+          </div>
+          <div class="input-row">
+            <label>Ảnh chính (URL Link)</label>
+            <input id="pImageUrl" class="input">
+          </div>
+          <div class="input-row">
+            <label>Giá tiền (VNĐ) *</label>
+            <input id="pPrice" type="number" class="input" required>
+          </div>
+          <div class="input-row">
+            <label>Nhiều Ảnh (Cách nhau phẩy)</label>
+            <input id="pGalleryUrls" class="input">
+          </div>
+          <div class="input-row full-width">
+            <label>Ghi chú khi mua</label>
+            <input id="pDeliveryText" class="input" placeholder="Vd: Đăng nhập bằng Facebook...">
+          </div>
+          <div class="input-row">
+            <label>Tài khoản Game</label>
+            <input id="pDeliveryLogin" class="input" required>
+          </div>
+          <div class="input-row">
+            <label>Mật khẩu Game</label>
+            <input id="pDeliveryPassword" class="input" required>
+          </div>
         </div>
-        <div class="flex-row mt-3" style="gap: 10px;">
-          <button type="submit" id="productSubmitBtn" class="btn btn-glow flex-1">Thêm Sản Phẩm Mới</button>
-          <button type="button" id="cancelEditBtn" class="btn btn-secondary hidden">Hủy Chỉnh Sửa</button>
+        <div class="mt-4">
+          <button type="submit" id="productSubmitBtn" class="btn btn-submit-form w-100">Thêm Sản Phẩm Mới</button>
+          <button type="button" id="cancelEditBtn" class="btn btn-secondary hidden w-100 mt-2" style="padding: 16px; border-radius: 8px;">Hủy Chỉnh Sửa</button>
         </div>
       </form>
 
@@ -118,6 +144,36 @@
     </div>
   </div>
 
+  <footer class="footer-panel">
+    <div class="shell">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3>Về ShopAcc</h3>
+          <p>Hệ thống cung cấp tài khoản game tự động, uy tín, chất lượng hàng đầu. Chúng tôi cam kết bảo mật thông tin và mang lại trải nghiệm mua sắm tuyệt vời nhất cho mọi game thủ.</p>
+        </div>
+        <div class="footer-col">
+          <h3>Chính Sách & Tuân Thủ</h3>
+          <ul>
+            <li><a href="#">Điều khoản sử dụng dịch vụ</a></li>
+            <li><a href="#">Chính sách bảo mật thông tin</a></li>
+            <li><a href="#">Chính sách đổi trả & hoàn tiền</a></li>
+            <li><a href="#">Tuân thủ tiêu chuẩn cộng đồng</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h3>Liên Hệ & Hỗ Trợ</h3>
+          <p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p>
+          <p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p>
+          <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
+          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        &copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.
+      </div>
+    </div>
+  </footer>
+
   <div class="navigation" id="bottomNav">
     <ul>
       <li class="list"><a href="index.html"><span class="icon"><ion-icon name="home-outline"></ion-icon></span><span class="text">Home</span></a></li>
@@ -132,23 +188,5 @@
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script type="module" src="./app.js"></script>
-    <footer id="copyright"
-    style="
-        position: fixed;
-        bottom: 6px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 11px;
-        color: #ffffff;
-        opacity: 0.8;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        user-select: none;
-        pointer-events: none;
-        z-index: 9999;
-        text-shadow: 0 0 3px rgba(0,0,0,0.6);
-    ">
-    © 2026 Luavang – All Rights Reserved
-</footer>
 </body>
 </html>

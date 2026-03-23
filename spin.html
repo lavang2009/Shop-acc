@@ -21,54 +21,20 @@
   <main class="shell flex-center mt-4">
     <section class="panel glass-panel" style="width: 100%; max-width: 500px; padding: 40px 24px;">
       <h2 class="text-center gradient-text mb-2" style="font-size: 32px;">🎡 Vòng Quay Vô Cực</h2>
-      <p class="text-center text-gray mb-4">Mỗi lượt chỉ với <strong>20.000 đ</strong> Vui lòng không quay(đang được phát triển) - Cơ hội trúng Acc Siêu VIP</p>
+      <p class="text-center text-gray mb-4">Mỗi lượt chỉ với <strong>20.000 đ</strong> - Cơ hội trúng Tiền Mặt hấp dẫn</p>
       
-      <div class="spin-container mb-4">
-        <div class="pointer">▼</div>
-        <div id="wheel" class="wheel-visual"><div class="wheel-inner">QUAY</div></div>
+      <div class="spin-wrapper">
+        <div id="wheelBox" class="wheel-box">
+          <img src="vongquay.jpg" alt="Vòng Quay Nền" class="wheel-img">
+        </div>
+        <img id="spinBtnImg" src="quay.png" alt="Nút Quay" class="spin-btn-img">
       </div>
       
-      <button id="spinBtn" class="btn btn-glow w-100 mt-4" style="font-size: 18px; padding: 16px;">THỬ VẬN MAY NGAY LẬP TỨC</button>
+      <p class="text-center text-muted" style="font-size: 13px; margin-top: 15px;">Bấm vào kim chỉ nam ở giữa để bắt đầu!</p>
     </section>
   </main>
 
   <div id="toast" class="toast hidden"></div>
-
-  <div id="welcomeModal" class="modal-overlay hidden">
-    <div class="panel modal-content glass-panel" style="border: 2px solid var(--primary);">
-      <div class="text-center mb-3">
-        <h2 class="gradient-text">🎉 THÔNG BÁO TỪ ADMIN</h2>
-      </div>
-      <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);">
-        <p>- Chào mừng bạn đến với Shop Acc Tự Động!</p>
-        <p>- Hệ thống vòng quay may mắn đang được phát triển và bảo trì.</p>
-        <p>- Nếu người dùng ấn nhầm hoặc tự quay thì admin sẽ không chịu trách nhiệm</p>
-        <p class="text-green mt-2" style="font-weight: 700;">Chúc bạn có trải nghiệm tuyệt vời!</p>
-      </div>
-      <div class="flex-row" style="gap: 10px;">
-        <button id="closeWelcomeBtn" class="btn btn-outline flex-1">Đóng</button>
-      </div>
-    </div>
-  </div>
-  
-    <div id="toast" class="toast hidden"></div>
-
-  <div id="welcomeModal" class="modal-overlay hidden">
-    <div class="panel modal-content glass-panel" style="border: 2px solid var(--primary);">
-      <div class="text-center mb-3">
-        <h2 class="gradient-text">🎉 THÔNG BÁO TỪ ADMIN</h2>
-      </div>
-      <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);">
-        <p>- Chào mừng bạn đến với Shop Acc Tự Động!</p>
-        <p>- Hệ thống vòng quay may mắn đang được phát triển và bảo trì.</p>
-        <p>- Nếu người dùng ấn nhầm hoặc tự quay thì admin sẽ không chịu trách nhiệm</p>
-        <p class="text-green mt-2" style="font-weight: 700;">Chúc bạn có trải nghiệm tuyệt vời!</p>
-      </div>
-      <div class="flex-row" style="gap: 10px;">
-        <button id="closeWelcomeBtn" class="btn btn-outline flex-1">Đóng</button>
-      </div>
-    </div>
-  </div>
   
   <div id="successModal" class="modal-overlay hidden">
     <div class="panel modal-content glass-panel" style="border: 2px solid var(--green); text-align: center;">
@@ -99,14 +65,14 @@
         </div>
         <div class="footer-col">
           <h3>Liên Hệ & Hỗ Trợ</h3>
-          <p>📍 <strong>Địa chỉ:</strong> 123 Đường Game Thủ, Quận 1, TP. Hồ Chí Minh</p>
-          <p>📧 <strong>Email:</strong> hotro@shopacc.vn</p>
+          <p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p>
+          <p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p>
           <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
-          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vang</span></p>
+          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p>
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2026 ShopAcc Premium. All rights reserved. Version 2.0.
+        &copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.
       </div>
     </div>
   </footer>
@@ -125,23 +91,5 @@
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script type="module" src="./app.js"></script>
-    <footer id="copyright"
-    style="
-        position: fixed;
-        bottom: 6px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 11px;
-        color: #ffffff;
-        opacity: 0.8;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        user-select: none;
-        pointer-events: none;
-        z-index: 9999;
-        text-shadow: 0 0 3px rgba(0,0,0,0.6);
-    ">
-    © 2026 Luavang – All Rights Reserved
-</footer>
 </body>
 </html>

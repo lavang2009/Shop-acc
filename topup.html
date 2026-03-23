@@ -19,14 +19,14 @@
   </header>
 
   <main class="shell flex-center">
-    <section class="panel glass-panel w-100" style="max-width: 600px;">
-      <h2 class="mb-4 text-center gradient-text" style="font-size: 28px;">💳 Bơm Ví Tiền Của Bạn</h2>
+    <section class="panel glass-panel w-100" style="max-width: 650px;">
+      <h2 class="mb-4 text-center text-main" style="font-size: 26px;">💳 Bơm Ví Tiền Của Bạn</h2>
       
       <div class="auth-tabs mb-4">
-        <button id="tabBank" class="tab active">Chuyển Khoản Ngân Hàng Tự Động</button>
+        <button id="tabBank" class="tab active btn-submit-form" style="background: linear-gradient(90deg, #7b61ff, #8e63ff);">Chuyển Khoản Ngân Hàng Tự Động</button>
       </div>
 
-      <div id="bankTopupForm" class="form-stack">
+      <div id="bankTopupForm">
         <div class="bank-card">
           <div class="bank-info">
             <img src="https://upload.wikimedia.org/wikipedia/commons/2/25/Logo_MB_new.png" alt="MBBank" class="bank-logo">
@@ -36,10 +36,19 @@
               <p class="bank-owner">LAU A VANG</p>
             </div>
           </div>
+          
           <div class="transfer-box">
-            <p class="warning-text text-center text-gray mb-2">LƯU Ý QUAN TRỌNG: COPY CHÍNH XÁC NỘI DUNG BÊN DƯỚI ĐỂ ĐƯỢC CỘNG TIỀN TỰ ĐỘNG</p>
-            <div class="transfer-code" id="transferContent">Đang tải UID...</div>
-            <button id="copyTransferBtn" class="btn btn-outline w-100 mt-3">📋 Copy Nội Dung Chuyển Khoản</button>
+            <div class="transfer-box-inner">
+              <div class="transfer-left">
+                <p class="warning-text text-center">LƯU Ý QUAN TRỌNG: COPY CHÍNH XÁC NỘI DUNG BÊN DƯỚI ĐỂ ĐƯỢC CỘNG TIỀN TỰ ĐỘNG</p>
+                <div class="transfer-code" id="transferContent">Đang tải UID...</div>
+                <button id="copyTransferBtn" class="btn btn-dark-copy w-100 mt-2">📋 Copy Nội Dung Chuyển Khoản</button>
+              </div>
+              <div class="transfer-right">
+                <img id="qrCodeImg" src="https://via.placeholder.com/150?text=Đang+tải+QR..." alt="QR Code VietQR" />
+                <p class="qr-text mt-1">Quét mã để nạp nhanh</p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -77,14 +86,14 @@
         </div>
         <div class="footer-col">
           <h3>Liên Hệ & Hỗ Trợ</h3>
-          <p>📍 <strong>Địa chỉ:</strong> 123 Đường Game Thủ, Quận 1, TP. Hồ Chí Minh</p>
-          <p>📧 <strong>Email:</strong> hotro@shopacc.vn</p>
+          <p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p>
+          <p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p>
           <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
-          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vang</span></p>
+          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p>
         </div>
       </div>
       <div class="footer-bottom">
-        &copy; 2026 ShopAcc Premium. All rights reserved. Version 2.0.
+        &copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.
       </div>
     </div>
   </footer>
@@ -103,23 +112,5 @@
 
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script type="module" src="./app.js"></script>
-    <footer id="copyright"
-    style="
-        position: fixed;
-        bottom: 6px;
-        left: 50%;
-        transform: translateX(-50%);
-        font-size: 11px;
-        color: #ffffff;
-        opacity: 0.8;
-        font-weight: 700;
-        letter-spacing: 0.5px;
-        user-select: none;
-        pointer-events: none;
-        z-index: 9999;
-        text-shadow: 0 0 3px rgba(0,0,0,0.6);
-    ">
-    © 2026 Luavang – All Rights Reserved
-</footer>
 </body>
 </html>
