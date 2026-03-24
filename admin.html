@@ -15,7 +15,13 @@
       <div class="brand-logo">★ ShopAcc</div>
       <div class="subtitle">Hệ Thống Quản Trị Cấp Cao</div>
     </a>
-    <div class="topbar-actions"><span id="statusPill" class="pill pill-muted">Đang tải...</span></div>
+    <div class="topbar-actions">
+      <button id="cartBtn" class="btn btn-outline" style="padding: 8px 12px; position: relative;" onclick="window.openCartModal()">
+        <ion-icon name="cart-outline" style="font-size: 20px;"></ion-icon>
+        <span id="cartBadge" style="position: absolute; top: -5px; right: -5px; background: var(--red); color: #fff; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 10px; display: none;">0</span>
+      </button>
+      <span id="statusPill" class="pill pill-muted">Đang tải...</span>
+    </div>
   </header>
 
   <main class="shell">
@@ -26,154 +32,71 @@
 
       <h4 class="text-purple mb-2">Bảng Lệnh Terminal</h4>
       <div class="terminal-box mb-4">
-        <div class="terminal-header">
-          <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
-          <div class="terminal-title">admin@shopacc:~</div>
-        </div>
+        <div class="terminal-header"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div><div class="terminal-title">admin@shopacc:~</div></div>
         <div class="terminal-body">
-          <div id="cmdLog" class="terminal-log">Hệ thống sẵn sàng. Nhập /help để xem danh sách lệnh hỗ trợ.</div>
-          <div class="terminal-input-wrap">
-            <span class="prompt">$</span>
-            <input type="text" id="adminCmdInput" placeholder="Nhập lệnh tại đây..." autocomplete="off">
-            <button id="execCmdBtn" class="btn btn-outline btn-sm">Thực thi</button>
-          </div>
+          <div id="cmdLog" class="terminal-log">Hệ thống sẵn sàng. Nhập /help để xem lệnh.</div>
+          <div class="terminal-input-wrap"><span class="prompt">$</span><input type="text" id="adminCmdInput" placeholder="Nhập lệnh tại đây..." autocomplete="off"><button id="execCmdBtn" class="btn btn-outline btn-sm">Thực thi</button></div>
         </div>
       </div>
 
       <h4 class="text-purple mb-3 mt-4" style="font-size: 18px;">Thêm / Sửa Sản Phẩm</h4>
       <form id="productForm" class="admin-product-form mb-4">
         <div class="form-grid-2">
-          <div class="input-row">
-            <label>Tên Sản Phẩm *</label>
-            <input id="pTitle" class="input" required>
-          </div>
-          <div class="input-row">
-            <label>Game/Thể loại *</label>
-            <input id="pGame" class="input" required>
-          </div>
-          <div class="input-row">
-            <label>Mô tả ngắn</label>
-            <input id="pDescription" class="input">
-          </div>
-          <div class="input-row">
-            <label>Ảnh chính (URL Link)</label>
-            <input id="pImageUrl" class="input">
-          </div>
-          <div class="input-row">
-            <label>Giá tiền (VNĐ) *</label>
-            <input id="pPrice" type="number" class="input" required>
-          </div>
-          <div class="input-row">
-            <label>Nhiều Ảnh (Cách nhau phẩy)</label>
-            <input id="pGalleryUrls" class="input">
-          </div>
-          <div class="input-row full-width">
-            <label>Ghi chú khi mua</label>
-            <input id="pDeliveryText" class="input" placeholder="Vd: Đăng nhập bằng Facebook...">
-          </div>
-          <div class="input-row">
-            <label>Tài khoản Game</label>
-            <input id="pDeliveryLogin" class="input" required>
-          </div>
-          <div class="input-row">
-            <label>Mật khẩu Game</label>
-            <input id="pDeliveryPassword" class="input" required>
-          </div>
+          <div class="input-row"><label>Tên Sản Phẩm *</label><input id="pTitle" class="input" required></div>
+          <div class="input-row"><label>Game/Thể loại *</label><input id="pGame" class="input" required></div>
+          <div class="input-row"><label>Mô tả ngắn</label><input id="pDescription" class="input"></div>
+          <div class="input-row"><label>Ảnh chính (URL Link)</label><input id="pImageUrl" class="input"></div>
+          <div class="input-row"><label>Giá gốc (VNĐ)</label><input id="pOriginalPrice" type="number" class="input" placeholder="Bỏ trống nếu không sale..."></div>
+          <div class="input-row"><label>Giá bán thực tế *</label><input id="pPrice" type="number" class="input" required></div>
+          <div class="input-row full-width"><label>Nhiều Ảnh (Cách nhau phẩy)</label><input id="pGalleryUrls" class="input"></div>
+          <div class="input-row full-width"><label>Ghi chú khi mua</label><input id="pDeliveryText" class="input" placeholder="Vd: Đăng nhập bằng Facebook..."></div>
+          <div class="input-row"><label>Tài khoản Game</label><input id="pDeliveryLogin" class="input" required></div>
+          <div class="input-row"><label>Mật khẩu Game</label><input id="pDeliveryPassword" class="input" required></div>
         </div>
-        <div class="mt-4">
-          <button type="submit" id="productSubmitBtn" class="btn btn-submit-form w-100">Thêm Sản Phẩm Mới</button>
-          <button type="button" id="cancelEditBtn" class="btn btn-secondary hidden w-100 mt-2" style="padding: 16px; border-radius: 8px;">Hủy Chỉnh Sửa</button>
-        </div>
+        <div class="mt-4"><button type="submit" id="productSubmitBtn" class="btn btn-submit-form w-100">Thêm Sản Phẩm Mới</button><button type="button" id="cancelEditBtn" class="btn btn-secondary hidden w-100 mt-2" style="padding: 16px; border-radius: 8px;">Hủy Chỉnh Sửa</button></div>
       </form>
 
-      <div class="flex-row mb-2" style="justify-content: space-between;">
-        <h4 class="text-purple">Kho Hàng Hiện Tại</h4>
-        <button id="btnRefreshAdminProducts" class="btn btn-outline btn-sm">Làm mới kho</button>
-      </div>
-      <div class="table-scroll mb-4">
-        <table class="table">
-          <thead><tr><th>Hình ảnh</th><th>Thông tin chung</th><th>Game</th><th>Giá bán</th><th>Tình trạng</th><th class="text-right">Hành động</th></tr></thead>
-          <tbody id="adminProductsTable"></tbody>
-        </table>
-      </div>
+      <div class="flex-row mb-2" style="justify-content: space-between;"><h4 class="text-purple">Kho Hàng Hiện Tại</h4><button id="btnRefreshAdminProducts" class="btn btn-outline btn-sm">Làm mới kho</button></div>
+      <div class="table-scroll mb-4"><table class="table"><thead><tr><th>Hình ảnh</th><th>Thông tin chung</th><th>Game</th><th>Giá bán</th><th>Tình trạng</th><th class="text-right">Hành động</th></tr></thead><tbody id="adminProductsTable"></tbody></table></div>
 
       <h4 class="text-purple mb-3 mt-4">Quản Lý & Bơm Tiền User</h4>
-      <div class="mb-3">
-        <input id="userSearchInput" class="input input-large" placeholder="🔍 Nhập Tên, Mã UID hoặc Email để Tìm kiếm & Lọc danh sách nạp...">
-      </div>
-
-      <form id="topupForm" class="flex-row mb-4" style="gap: 10px;">
-        <select id="userSelect" class="input flex-1"></select>
-        <input id="topupAmount" type="number" class="input" placeholder="Số tiền nạp..." style="width: 150px;" required>
-        <button type="submit" class="btn btn-green">Bơm Tiền</button>
-      </form>
-
-      <div class="table-scroll mb-5">
-        <table class="table">
-          <thead><tr><th>Thành Viên</th><th>Email</th><th>Số dư hiện tại</th><th>Cấp bậc</th><th class="text-right">Tác vụ Quản lý</th></tr></thead>
-          <tbody id="usersTable"></tbody>
-        </table>
-      </div>
+      <div class="mb-3"><input id="userSearchInput" class="input input-large" placeholder="🔍 Nhập Tên, Mã UID hoặc Email để Tìm kiếm & Lọc..."></div>
+      <form id="topupForm" class="flex-row mb-4" style="gap: 10px;"><select id="userSelect" class="input flex-1"></select><input id="topupAmount" type="number" class="input" placeholder="Số tiền nạp..." style="width: 150px;" required><button type="submit" class="btn btn-green">Bơm Tiền</button></form>
+      <div class="table-scroll mb-5"><table class="table"><thead><tr><th>Thành Viên</th><th>Email</th><th>Số dư hiện tại</th><th>Cấp bậc</th><th class="text-right">Tác vụ Quản lý</th></tr></thead><tbody id="usersTable"></tbody></table></div>
 
       <h4 class="text-purple mb-3 mt-5">Lịch Sử Giao Dịch Toàn Hệ Thống</h4>
-      <div class="mb-3">
-        <input id="allOrdersSearchInput" class="input input-large" placeholder="🔍 Nhập Tên User, Mã UID hoặc Tên Sản phẩm để tra cứu...">
-      </div>
-      <div class="table-scroll mb-4" style="max-height: 500px; overflow-y: auto;">
-        <table class="table">
-          <thead style="position: sticky; top: 0; background: var(--bg-color); z-index: 10;">
-            <tr><th>Thời gian</th><th>Khách hàng</th><th>Giao dịch</th><th>Số tiền</th><th>Chi tiết (TK/MK)</th></tr>
-          </thead>
-          <tbody id="allOrdersTable"></tbody>
-        </table>
-      </div>
-
+      <div class="mb-3"><input id="allOrdersSearchInput" class="input input-large" placeholder="🔍 Nhập Tên User, Mã UID hoặc Tên Sản phẩm để tra cứu..."></div>
+      <div class="table-scroll mb-4" style="max-height: 500px; overflow-y: auto;"><table class="table"><thead style="position: sticky; top: 0; background: var(--bg-color); z-index: 10;"><tr><th>Thời gian</th><th>Khách hàng</th><th>Giao dịch</th><th>Số tiền</th><th>Chi tiết (TK/MK)</th></tr></thead><tbody id="allOrdersTable"></tbody></table></div>
     </section>
   </main>
   
   <div id="toast" class="toast hidden"></div>
 
-  <div id="successModal" class="modal-overlay hidden">
-    <div class="panel modal-content glass-panel" style="border: 2px solid var(--green); text-align: center;">
-      <div class="success-animation">
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
+  <div id="cartModal" class="modal-overlay hidden">
+    <div class="panel modal-content glass-panel" style="max-width: 400px; display: flex; flex-direction: column; max-height: 80vh; border-color: var(--primary);">
+      <h2 class="text-main mb-3 text-center">🛒 Giỏ Hàng</h2>
+      <div id="cartItemsList" style="flex: 1; overflow-y: auto; margin-bottom: 20px;"></div>
+      <div style="border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 15px;">
+         <div class="flex-row" style="justify-content: space-between; margin-bottom: 15px;"><span class="text-gray">Tổng thanh toán:</span><strong id="cartTotal" class="text-green" style="font-size: 20px;">0 đ</strong></div>
+         <div class="flex-row" style="gap: 10px;"><button onclick="window.closeCartModal()" class="btn btn-outline flex-1">Đóng</button><button id="checkoutCartBtn" class="btn btn-submit-form flex-1">Thanh Toán</button></div>
       </div>
-      <h2 id="successModalTitle" class="text-green mb-3">GIAO DỊCH THÀNH CÔNG!</h2>
-      <div id="successModalBody" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; font-family: monospace; text-align: left; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);"></div>
-      <button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 700;">ĐÓNG THÔNG BÁO</button>
     </div>
+  </div>
+
+  <div id="successModal" class="modal-overlay hidden">
+    <div class="panel modal-content glass-panel" style="border: 2px solid var(--green); text-align: center;"><div class="success-animation"><svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div><h2 id="successModalTitle" class="text-green mb-3">GIAO DỊCH THÀNH CÔNG!</h2><div id="successModalBody" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; font-family: monospace; text-align: left; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);"></div><button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 700;">ĐÓNG THÔNG BÁO</button></div>
   </div>
 
   <footer class="footer-panel">
     <div class="shell">
       <div class="footer-grid">
-        <div class="footer-col">
-          <h3>Về ShopAcc</h3>
-          <p>Hệ thống cung cấp tài khoản game tự động, uy tín, chất lượng hàng đầu. Chúng tôi cam kết bảo mật thông tin và mang lại trải nghiệm mua sắm tuyệt vời nhất cho mọi game thủ.</p>
-        </div>
-        <div class="footer-col">
-          <h3>Chính Sách & Tuân Thủ</h3>
-          <ul>
-            <li><a href="#">Điều khoản sử dụng dịch vụ</a></li>
-            <li><a href="#">Chính sách bảo mật thông tin</a></li>
-            <li><a href="#">Chính sách đổi trả & hoàn tiền</a></li>
-            <li><a href="#">Tuân thủ tiêu chuẩn cộng đồng</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Liên Hệ & Hỗ Trợ</h3>
-          <p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p>
-          <p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p>
-          <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
-          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p>
-        </div>
+        <div class="footer-col"><h3>Về ShopAcc</h3><p>Hệ thống cung cấp tài khoản game tự động, uy tín, chất lượng hàng đầu. Chúng tôi cam kết bảo mật thông tin và mang lại trải nghiệm mua sắm tuyệt vời nhất cho mọi game thủ.</p></div>
+        <div class="footer-col"><h3>Chính Sách & Tuân Thủ</h3><ul><li><a href="terms.html">Điều khoản sử dụng dịch vụ</a></li><li><a href="privacy.html">Chính sách bảo mật thông tin</a></li><li><a href="refund.html">Chính sách đổi trả & hoàn tiền</a></li><li><a href="compliance.html">Tuân thủ tiêu chuẩn cộng đồng</a></li></ul></div>
+        <div class="footer-col"><h3>Liên Hệ & Hỗ Trợ</h3><p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p><p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p><p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p><p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p></div>
       </div>
-      <div class="footer-bottom">
-        &copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.
-      </div>
+      <div class="footer-bottom">&copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.</div>
     </div>
   </footer>
-
   <div class="navigation" id="bottomNav">
     <ul>
       <li class="list"><a href="index.html"><span class="icon"><ion-icon name="home-outline"></ion-icon></span><span class="text">Home</span></a></li>
@@ -185,8 +108,6 @@
       <div class="indicator"><div class="indicator-circle"></div></div>
     </ul>
   </div>
-
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script type="module" src="./app.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script><script type="module" src="./app.js"></script>
 </body>
 </html>
