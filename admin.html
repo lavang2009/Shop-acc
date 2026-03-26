@@ -8,13 +8,10 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
+  <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div>
 
-  <header class="topbar glass-panel">
-    <a href="index.html" class="brand-zone">
-      <div class="brand-logo">★ ShopAcc</div>
-      <div class="subtitle">Hệ Thống Quản Trị Cấp Cao</div>
-    </a>
+  <header class="topbar dark-panel">
+    <a href="index.html" class="brand-zone"><div class="brand-logo">★ ShopAcc</div></a>
     <div class="topbar-actions">
       <button id="cartBtn" class="btn btn-outline" style="padding: 8px 12px; position: relative;" onclick="window.openCartModal()">
         <ion-icon name="cart-outline" style="font-size: 20px;"></ion-icon>
@@ -25,10 +22,10 @@
   </header>
 
   <main class="shell">
-    <section id="adminPanel" class="panel admin-panel glass-panel hidden">
-      <div class="section-head mb-4 text-center">
-        <h2 class="gradient-text" style="font-size: 28px;">Bảng Điều Khiển Quản Trị</h2>
-      </div>
+    <section id="adminPanel" class="panel admin-panel dark-panel hidden">
+      <div class="section-head mb-4 text-center"><h2 class="gradient-text" style="font-size: 28px;">Bảng Điều Khiển Quản Trị</h2></div>
+
+      <div class="stats-grid mb-4" id="adminStatsGrid"></div>
 
       <h4 class="text-purple mb-2">Bảng Lệnh Terminal</h4>
       <div class="terminal-box mb-4">
@@ -59,6 +56,14 @@
       <div class="flex-row mb-2" style="justify-content: space-between;"><h4 class="text-purple">Kho Hàng Hiện Tại</h4><button id="btnRefreshAdminProducts" class="btn btn-outline btn-sm">Làm mới kho</button></div>
       <div class="table-scroll mb-4"><table class="table"><thead><tr><th>Hình ảnh</th><th>Thông tin chung</th><th>Game</th><th>Giá bán</th><th>Tình trạng</th><th class="text-right">Hành động</th></tr></thead><tbody id="adminProductsTable"></tbody></table></div>
 
+      <h4 class="text-purple mb-3 mt-4">Quản Lý Thẻ Cào (Duyệt Nạp)</h4>
+      <div class="table-scroll mb-5">
+        <table class="table">
+          <thead><tr><th>Thời gian</th><th>Thành Viên</th><th>Thẻ (Mạng/Giá)</th><th>Mã Thẻ / Seri</th><th>Trạng thái</th><th class="text-right">Hành động</th></tr></thead>
+          <tbody id="adminCardsTable"></tbody>
+        </table>
+      </div>
+
       <h4 class="text-purple mb-3 mt-4">Quản Lý & Bơm Tiền User</h4>
       <div class="mb-3"><input id="userSearchInput" class="input input-large" placeholder="🔍 Nhập Tên, Mã UID hoặc Email để Tìm kiếm & Lọc..."></div>
       <form id="topupForm" class="flex-row mb-4" style="gap: 10px;"><select id="userSelect" class="input flex-1"></select><input id="topupAmount" type="number" class="input" placeholder="Số tiền nạp..." style="width: 150px;" required><button type="submit" class="btn btn-green">Bơm Tiền</button></form>
@@ -70,22 +75,14 @@
     </section>
   </main>
   
+  <div class="floating-contact">
+    <a href="https://zalo.me/0333096434" class="contact-btn btn-zalo" title="Chat Zalo"><ion-icon name="chatbubbles-outline"></ion-icon></a>
+    <a href="https://www.facebook.com/profile.php?id=61552609144640" class="contact-btn btn-mess" title="Messenger"><ion-icon name="logo-facebook"></ion-icon></a>
+  </div>
+  
   <div id="toast" class="toast hidden"></div>
-
-  <div id="cartModal" class="modal-overlay hidden">
-    <div class="panel modal-content glass-panel" style="max-width: 400px; display: flex; flex-direction: column; max-height: 80vh; border-color: var(--primary);">
-      <h2 class="text-main mb-3 text-center">🛒 Giỏ Hàng</h2>
-      <div id="cartItemsList" style="flex: 1; overflow-y: auto; margin-bottom: 20px;"></div>
-      <div style="border-top: 1px dashed rgba(255,255,255,0.2); padding-top: 15px;">
-         <div class="flex-row" style="justify-content: space-between; margin-bottom: 15px;"><span class="text-gray">Tổng thanh toán:</span><strong id="cartTotal" class="text-green" style="font-size: 20px;">0 đ</strong></div>
-         <div class="flex-row" style="gap: 10px;"><button onclick="window.closeCartModal()" class="btn btn-outline flex-1">Đóng</button><button id="checkoutCartBtn" class="btn btn-submit-form flex-1">Thanh Toán</button></div>
-      </div>
-    </div>
-  </div>
-
-  <div id="successModal" class="modal-overlay hidden">
-    <div class="panel modal-content glass-panel" style="border: 2px solid var(--green); text-align: center;"><div class="success-animation"><svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div><h2 id="successModalTitle" class="text-green mb-3">GIAO DỊCH THÀNH CÔNG!</h2><div id="successModalBody" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; font-family: monospace; text-align: left; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);"></div><button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 700;">ĐÓNG THÔNG BÁO</button></div>
-  </div>
+  <div id="cartModal" class="modal-overlay hidden"><div class="panel modal-content dark-panel" style="max-width: 400px; display: flex; flex-direction: column; max-height: 80vh; border-color: var(--primary);"><h2 class="text-main mb-3 text-center">🛒 Giỏ Hàng</h2><div id="cartItemsList" style="flex: 1; overflow-y: auto; margin-bottom: 20px;"></div><div style="border-top: 1px dashed var(--border); padding-top: 15px;"><div class="flex-row" style="justify-content: space-between; margin-bottom: 15px;"><span class="text-gray">Tổng thanh toán:</span><strong id="cartTotal" class="text-green" style="font-size: 20px;">0 đ</strong></div><div class="flex-row" style="gap: 10px;"><button onclick="window.closeCartModal()" class="btn btn-outline flex-1">Đóng</button><button id="checkoutCartBtn" class="btn btn-glow flex-1">Thanh Toán</button></div></div></div></div>
+  <div id="successModal" class="modal-overlay hidden"><div class="panel modal-content dark-panel" style="border: 2px solid var(--green); text-align: center;"><div class="success-animation"><svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div><h2 id="successModalTitle" class="text-green mb-3" style="font-size: 22px; font-weight: 800;">GIAO DỊCH THÀNH CÔNG!</h2><div id="successModalBody" class="inner-box" style="padding: 18px; font-family: monospace; text-align: left; margin-bottom: 24px; line-height: 1.6; color: var(--text-muted);"></div><button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 800; font-size: 15px; padding: 14px;">ĐÓNG THÔNG BÁO</button></div></div>
 
   <footer class="footer-panel">
     <div class="shell">

@@ -8,104 +8,78 @@
   <link rel="stylesheet" href="./styles.css" />
 </head>
 <body>
-  <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div><div class="bg-orb orb-3"></div>
+  <div class="bg-orb orb-1"></div><div class="bg-orb orb-2"></div>
 
-  <header class="topbar glass-panel">
-    <a href="index.html" class="brand-zone">
-      <div class="brand-logo">★ Shop Acc Luavangw</div>
-      <div class="subtitle">Quản Lý Cá Nhân</div>
-    </a>
-    <div class="topbar-actions"><span id="statusPill" class="pill pill-muted">Đang tải...</span></div>
+  <header class="topbar dark-panel">
+    <a href="index.html" class="brand-zone"><div class="brand-logo">★ Shop Acc Luavang</div></a>
+    <div class="topbar-actions">
+      <button id="cartBtn" class="btn btn-outline" style="padding: 8px 12px; position: relative;" onclick="window.openCartModal()">
+        <ion-icon name="cart-outline" style="font-size: 20px;"></ion-icon>
+        <span id="cartBadge" style="position: absolute; top: -5px; right: -5px; background: var(--red); color: #fff; font-size: 10px; font-weight: bold; padding: 2px 6px; border-radius: 10px; display: none;">0</span>
+      </button>
+      <span id="statusPill" class="pill pill-muted">Đang tải...</span>
+    </div>
   </header>
 
-  <main class="shell flex-center mt-3">
-    <section class="panel glass-panel w-100" style="max-width: 550px;">
-      
+  <main class="shell mt-3">
+    <section class="panel profile-card dark-panel w-100">
       <div class="text-center mb-4">
-        <img id="profileAvatar" src="https://ui-avatars.com/api/?name=U&background=6e8dff&color=fff&size=100" alt="Avatar" style="border-radius: 50%; width: 90px; height: 90px; margin-bottom: 12px; border: 3px solid var(--primary); padding: 2px;" />
-        <h2 id="profileUsername" class="mb-2">Đang tải...</h2>
-        <p id="profileEmail" class="text-gray" style="font-size: 15px;">Đang lấy dữ liệu...</p>
+        <div class="profile-avatar-wrap"><img id="profileAvatar" src="https://ui-avatars.com/api/?name=U&background=6e8dff&color=fff&size=100" alt="Avatar" class="profile-avatar"></div>
+        <h2 id="profileUsername" class="mb-1" style="font-size: 24px;">Đang tải...</h2>
+        <div id="profileVip" class="mb-2"></div>
+        
+        <div id="vipProgressBg" style="margin-bottom: 10px;"></div>
+        
+        <p id="profileEmail" class="text-gray" style="font-size: 14px;">Đang lấy dữ liệu...</p>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 24px;">
-        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-          <p class="text-gray mb-1" style="font-size: 13px;">Số dư hiện tại</p>
-          <h3 id="profileBalance" class="text-green">0 đ</h3>
-        </div>
-        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
-          <p class="text-gray mb-1" style="font-size: 13px;">Vai trò hệ thống</p>
-          <h3 id="profileRole" class="text-purple">USER</h3>
-        </div>
-        <div style="background: rgba(0,0,0,0.3); padding: 15px; border-radius: 12px; grid-column: 1 / -1; border: 1px solid rgba(255,255,255,0.05);">
-          <div class="flex-row" style="justify-content: space-between;">
-            <p class="text-gray mb-1" style="font-size: 13px;">UID Tài Khoản (ID Nội bộ)</p>
-            <button class="uid-text border-0" onclick="window.copyText(document.getElementById('profileUid').textContent, 'Đã copy UID của bạn!')" style="margin:0;">Copy UID</button>
-          </div>
-          <h4 id="profileUid" class="text-main mt-2" style="font-family: monospace; font-size: 14px; word-break: break-all;">...</h4>
-        </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 15px;">
+        <div class="inner-box" style="padding: 15px 20px;"><p class="text-gray mb-1" style="font-size: 12px;">Số dư hiện tại</p><h3 id="profileBalance" class="text-green" style="font-size: 20px;">0 đ</h3></div>
+        <div class="inner-box" style="padding: 15px 20px;"><p class="text-gray mb-1" style="font-size: 12px;">Vai trò hệ thống</p><h3 id="profileRole" class="text-purple" style="font-size: 20px;">USER</h3></div>
+      </div>
+      <div class="inner-box mb-4 flex-row" style="justify-content: space-between; align-items: center; padding: 15px 20px;">
+        <div style="overflow: hidden;"><p class="text-gray mb-1" style="font-size: 12px;">UID Tài Khoản (ID Nội bộ)</p><h4 id="profileUid" class="text-main" style="font-family: monospace; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">...</h4></div>
+        <button class="btn btn-sm" style="background:#f8f9fa; color:#000; font-weight:700; border-radius:6px; padding: 6px 10px; flex-shrink: 0;" onclick="window.copyText(document.getElementById('profileUid').textContent, 'Đã copy UID của bạn!')">Copy UID</button>
       </div>
 
-      <h4 class="mb-3 text-purple text-center">Bảng điều khiển nhanh</h4>
-      
-      <div id="adminEntryZone" class="hidden mb-3">
-        <a href="admin.html" class="btn w-100" style="background: linear-gradient(135deg, #ff4757, #ff6b81); color: white; box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4); font-size: 16px; padding: 14px;">⚙️ TRUY CẬP TRANG QUẢN TRỊ (ADMIN)</a>
+      <div class="inner-box mb-4" style="padding: 20px;">
+        <h4 class="mb-3 text-purple text-center" style="font-size: 14px;"><ion-icon name="lock-closed"></ion-icon> Đổi Mật Khẩu</h4>
+        <form id="changePwdForm" class="flex-row" style="gap: 10px;">
+            <input type="password" id="newPassword" class="input flex-1" placeholder="Mật khẩu mới (tối thiểu 6 kí tự)..." style="padding: 10px 15px;" required>
+            <button type="submit" class="btn btn-glow">Xác Nhận</button>
+        </form>
       </div>
 
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 24px;">
-         <a href="shop.html" class="btn btn-outline">🛒 Mua tài khoản</a>
-         <a href="topup.html" class="btn btn-outline">💳 Nạp tiền ngay</a>
-         <a href="history.html" class="btn btn-outline">📜 Lịch sử mua hàng</a>
-         <a href="spin.html" class="btn btn-outline">🎡 Vòng quay VIP</a>
+      <h4 class="mb-3 text-purple text-center" style="font-size: 14px;">Bảng điều khiển nhanh</h4>
+      <div id="adminEntryZone" class="hidden mb-3"><a href="admin.html" class="btn w-100 btn-admin-zone">⚙️ TRUY CẬP TRANG QUẢN TRỊ (ADMIN)</a></div>
+      <div class="profile-action-grid">
+         <a href="shop.html" class="btn-profile-action">🛒 Mua tài khoản</a><a href="topup.html" class="btn-profile-action">💳 Nạp tiền ngay</a>
+         <a href="history.html" class="btn-profile-action">📜 Lịch sử mua hàng</a><a href="spin.html" class="btn-profile-action">🎡 Vòng quay VIP</a>
       </div>
-
-      <button id="profileLogoutBtn" class="btn w-100" style="background: rgba(255, 71, 87, 0.15); color: var(--red); border: 1px solid var(--red);">Đăng Xuất Tài Khoản</button>
-
+      <button id="profileLogoutBtn" class="btn w-100 mt-4" style="background: rgba(255, 71, 87, 0.1); color: var(--red); border: 1px solid rgba(255, 71, 87, 0.2);">Đăng Xuất Tài Khoản</button>
     </section>
   </main>
 
-  <div id="toast" class="toast hidden"></div>
-
-  <div id="successModal" class="modal-overlay hidden">
-    <div class="panel modal-content glass-panel" style="border: 2px solid var(--green); text-align: center;">
-      <div class="success-animation">
-        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg>
-      </div>
-      <h2 id="successModalTitle" class="text-green mb-3">GIAO DỊCH THÀNH CÔNG!</h2>
-      <div id="successModalBody" style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; font-family: monospace; text-align: left; margin-bottom: 20px; line-height: 1.6; color: var(--text-muted);"></div>
-      <button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 700;">ĐÓNG THÔNG BÁO</button>
-    </div>
+  <div class="floating-contact">
+    <a href="https://zalo.me/0333096434" class="contact-btn btn-zalo" title="Chat Zalo"><ion-icon name="chatbubbles-outline"></ion-icon></a>
+    <a href="https://www.facebook.com/profile.php?id=61552609144640" class="contact-btn btn-mess" title="Messenger"><ion-icon name="logo-facebook"></ion-icon></a>
   </div>
+
+
+  <div id="toast" class="toast hidden"></div>
+  <div id="cartModal" class="modal-overlay hidden"><div class="panel modal-content dark-panel" style="max-width: 400px; display: flex; flex-direction: column; max-height: 80vh; border-color: var(--primary);"><h2 class="text-main mb-3 text-center">🛒 Giỏ Hàng</h2><div id="cartItemsList" style="flex: 1; overflow-y: auto; margin-bottom: 20px;"></div><div style="border-top: 1px dashed var(--border); padding-top: 15px;"><div class="flex-row" style="justify-content: space-between; margin-bottom: 15px;"><span class="text-gray">Tổng thanh toán:</span><strong id="cartTotal" class="text-green" style="font-size: 20px;">0 đ</strong></div><div class="flex-row" style="gap: 10px;"><button onclick="window.closeCartModal()" class="btn btn-outline flex-1">Đóng</button><button id="checkoutCartBtn" class="btn btn-glow flex-1">Thanh Toán</button></div></div></div></div>
+  <div id="successModal" class="modal-overlay hidden"><div class="panel modal-content dark-panel" style="border: 2px solid var(--green); text-align: center;"><div class="success-animation"><svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52"><circle class="checkmark__circle" cx="26" cy="26" r="25" fill="none"/><path class="checkmark__check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/></svg></div><h2 id="successModalTitle" class="text-green mb-3" style="font-size: 22px; font-weight: 800;">GIAO DỊCH THÀNH CÔNG!</h2><div id="successModalBody" class="inner-box" style="padding: 18px; font-family: monospace; text-align: left; margin-bottom: 24px; line-height: 1.6; color: var(--text-muted);"></div><button id="closeSuccessModalBtn" class="btn btn-green w-100" style="color: #000; font-weight: 800; font-size: 15px; padding: 14px;">ĐÓNG THÔNG BÁO</button></div></div>
 
   <footer class="footer-panel">
     <div class="shell">
       <div class="footer-grid">
-        <div class="footer-col">
-          <h3>Về Shop Acc Luavang</h3>
-          <p>Hệ thống cung cấp tài khoản game tự động, uy tín, chất lượng hàng đầu. Chúng tôi cam kết bảo mật thông tin và mang lại trải nghiệm mua sắm tuyệt vời nhất cho mọi game thủ.</p>
-        </div>
-        <div class="footer-col">
-          <h3>Chính Sách & Tuân Thủ</h3>
-          <ul>
-            <li><a href="terms.html">Điều khoản sử dụng dịch vụ</a></li>
-            <li><a href="privacy.html">Chính sách bảo mật thông tin</a></li>
-            <li><a href="refund.html">Chính sách đổi trả & hoàn tiền</a></li>
-            <li><a href="compliance.html">Tuân thủ tiêu chuẩn cộng đồng</a></li>
-          </ul>
-        </div>
-        <div class="footer-col">
-          <h3>Liên Hệ & Hỗ Trợ</h3>
-          <p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p>
-          <p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p>
-          <p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p>
-          <p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p>
-        </div>
+        <div class="footer-col"><h3>Về ShopAcc</h3><p>Hệ thống cung cấp tài khoản game tự động, uy tín, chất lượng hàng đầu. Chúng tôi cam kết bảo mật thông tin và mang lại trải nghiệm mua sắm tuyệt vời nhất cho mọi game thủ.</p></div>
+        <div class="footer-col"><h3>Chính Sách & Tuân Thủ</h3><ul><li><a href="terms.html">Điều khoản sử dụng dịch vụ</a></li><li><a href="privacy.html">Chính sách bảo mật thông tin</a></li><li><a href="refund.html">Chính sách đổi trả & hoàn tiền</a></li><li><a href="compliance.html">Tuân thủ tiêu chuẩn cộng đồng</a></li></ul></div>
+        <div class="footer-col"><h3>Liên Hệ & Hỗ Trợ</h3><p>📍 <strong>Địa chỉ:</strong> Phường Nam Gia Nghĩa, Lâm Đồng</p><p>📧 <strong>Email:</strong> lauavang2009@gmail.com</p><p>📞 <strong>Hotline:</strong> 0333.096.434 (Zalo/CSKH)</p><p>💻 <strong>Được thiết kế & phát triển bởi:</strong> <span class="text-primary">Lù A Vangg</span></p></div>
       </div>
-      <div class="footer-bottom">
-        &copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.
-      </div>
+      <div class="footer-bottom">&copy; 2026 Luavang Shopacc Premium. All rights reserved. Version 2.0.</div>
     </div>
   </footer>
-
   <div class="navigation" id="bottomNav">
     <ul>
       <li class="list"><a href="index.html"><span class="icon"><ion-icon name="home-outline"></ion-icon></span><span class="text">Home</span></a></li>
@@ -117,8 +91,6 @@
       <div class="indicator"><div class="indicator-circle"></div></div>
     </ul>
   </div>
-
-  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-  <script type="module" src="./app.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script><script type="module" src="./app.js"></script>
 </body>
 </html>
